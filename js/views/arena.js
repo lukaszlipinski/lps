@@ -1,7 +1,9 @@
 define('views/arena', [
-	'views/base'
+	'views/base',
+	'managers/components'
 ], function(
-	BaseView
+	BaseView,
+	componentsManager
 ) {
 	'use strict';
 
@@ -21,10 +23,12 @@ define('views/arena', [
 				var $el = $(e.currentTarget);
 				var startX = e.pageX,
 					startY = e.pageY,
-					startRect = e.currentTarget.getBoundingClientRect();
+					startRect = e.currentTarget.getBoundingClientRect(),
+					component = componentsManager.getComponent($el.attr('data-component-id'));
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					e.preventDefault();
+
 					var currentX = e.pageX,
 						currentY = e.pageY;
 

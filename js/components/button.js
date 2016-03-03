@@ -1,21 +1,22 @@
 define('components/button', [
-	'controllers/base'
+	'controllers/base_component'
 ], function(
-	BaseController
+	BaseComponentController
 ) {
-	var controller = BaseController.extend({
+	var controller = BaseComponentController.extend({
 		initialize: function(props) {
-			BaseController.prototype.initialize.apply(this, arguments);
+			BaseComponentController.prototype.initialize.apply(this, arguments);
 		},
 
 		destroy: function() {
-			BaseController.prototype.destroy.apply(this, arguments);
+			BaseComponentController.prototype.destroy.apply(this, arguments);
 		}
 	});
 
 	controller.supportedProperties = {
 		'aria-disabled': 'boolean',
-		'aria-pressed': 'boolean'
+		'aria-pressed': 'boolean',
+		'aria-locked': 'boolean'
 	};
 
 	return controller;

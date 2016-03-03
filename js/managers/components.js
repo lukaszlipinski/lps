@@ -8,21 +8,32 @@ define('managers/components', [
 	components
 ) {
 	var uniqueId = 0;
+	var componentsRegister = {};
 
 	return {
-		getComponentInstance: function(el) {
+		getComponent: function(id) {
+			return componentsRegister[id];
+		},
+		registerComponentInstance: function(el, parentComponent) {
 			var $el = $(el);
 			var type = $el.attr('data-component');
 			var componentDefinition = components[type];
+			var id = 'c' + uniqueId++;
 
-			$el.attr('data-component-id', uniqueId);
+			$el.attr('data-component-id', id);
 
-			return new components[type]({
+			var instance = new components[type]({
 				el: $el,
+				parentComponent: parentComponent,
 				settings: _.extend(this.getSettings($el, componentDefinition.supportedProperties), {
-					component_id: uniqueId++
+					component_id: id,
+					type: type
 				})
 			});
+
+			componentsRegister[id] = instance;
+
+			return instance;
 		},
 
 		getSettings: function($el, supportedProperties) {

@@ -23,11 +23,13 @@ requirejs.config({
 require([
 	'controllers/arena',
 	'views/arena',
+	'models/arena',
 	'jquery',
 	'managers/components'
 ], function(
 	ArenaController,
 	ArenaView,
+	ArenaModel,
 	$,
 	componentsManager
 ) {
@@ -38,11 +40,16 @@ require([
 	var arena = new ArenaController({
 		view: new ArenaView({
 			el: $arena
-		})
+		}),
+		models: {
+			config: new ArenaModel({
+				type: 'arena'
+			})
+		}
 	});
 
 	$arena.find('[data-component]').each(function(index, el) {
-		var component = componentsManager.getComponentInstance(el);
+		var component = componentsManager.registerComponentInstance(el, arena);
 
 		arena.registerElement(component);
 	});
