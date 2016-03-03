@@ -1,0 +1,20 @@
+<%
+var previous_type = null;
+for(var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var type = bookmark.getType();
+
+    if (previous_type !== type) { %>
+        <h3><%= bookmark.getGroupName() %></h3>
+    <%
+        previous_type = type;
+    } %>
+    <div><a href="<%= bookmark.getLinkUrl() %>"><%= bookmark.getLinkName() %></a></div>
+<% } %>
+
+<% if (!bookmarks.length) { %>
+    <h3>Information</h3>
+    <p>Please use stars icons to add/remove bookmarks.
+        Keep in mind that when you are not logged in,
+        your bookmarks will be saved only on this computer.</p>
+<% } %>

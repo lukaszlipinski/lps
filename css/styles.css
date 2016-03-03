@@ -1,0 +1,20 @@
+.arena {
+	width:800px;
+	height:350px;
+	border:1px solid black;
+	position: relative;
+}
+
+.arena .button {
+	width:100px;
+	height:75px;
+	background-color: red;
+	position: absolute;
+}
+
+.arena .box {
+	width:200px;
+	height:200px;
+	background-color: yellow;
+	position: absolute;
+}
