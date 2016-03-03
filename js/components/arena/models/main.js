@@ -1,4 +1,4 @@
-define('models/arena', [
+define('components/arena/models/main', [
 	'models/base_component'
 ], function(
 	BaseComponentModel

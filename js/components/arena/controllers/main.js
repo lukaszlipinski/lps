@@ -1,4 +1,4 @@
-define('controllers/arena', [
+define('components/arena/controllers/main', [
 	'controllers/base_component'
 ], function(
 	BaseComponentController

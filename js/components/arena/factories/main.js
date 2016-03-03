@@ -1,7 +1,7 @@
-define('factories/arena', [
-	'controllers/arena',
-	'views/arena',
-	'models/arena'
+define('components/arena/factories/main', [
+	'components/arena/controllers/main',
+	'components/arena/views/main',
+	'components/arena/models/main'
 ], function(
 	ArenaController,
 	ArenaView,

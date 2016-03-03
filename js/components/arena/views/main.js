@@ -1,4 +1,4 @@
-define('views/arena', [
+define('components/arena/views/main', [
 	'views/base_component'
 ], function(
 	BaseComponentView
