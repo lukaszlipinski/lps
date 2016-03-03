@@ -22,21 +22,47 @@ requirejs.config({
 
 require([
 	'jquery',
-	'managers/components',
-	'factories/arena'
+	'managers/components'
 ], function(
 	$,
-	componentsManager,
-	arenaFactory
+	componentsManager
 ) {
 	'use strict';
 
-	var $arena = $('[data-component="arena"]');
-	var arena = arenaFactory.getInstance($arena);
+	function getComponentsTree(el, type) {
+		var found = [];
+		var children = el.children;
 
-	$arena.find('[data-component]').each(function(index, el) {
-		var component = componentsManager.registerComponentInstance(el, arena);
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
 
-		arena.registerElement(component);
+			if (child.getAttribute(type) !== null) {
+				found.push({
+					parent: el,
+					child: child
+				});
+			}
+
+			found = found.concat(getComponentsTree(child, type));
+		}
+
+		return found;
+	}
+
+	var arena = document.querySelector('[data-component="arena"]');
+
+	//Register arena
+	var arenaComponent = componentsManager.registerComponentInstance(arena, null);
+
+	//Register all components inside it
+	var found = getComponentsTree(arena, 'data-component');
+
+	found.forEach(function(item, index) {
+		componentsManager.registerComponentInstance(
+			item.child,
+			componentsManager.getComponent(item.parent)
+		);
 	});
+
+
 });

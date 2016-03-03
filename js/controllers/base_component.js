@@ -27,6 +27,10 @@ define('controllers/base_component', [
 			return this.view.getRect();
 		},
 
+		getElement: function() {
+			return this.view.getElement();
+		},
+
 		destroy : function() {
 			BaseController.prototype.destroy.apply(this, arguments);
 		}

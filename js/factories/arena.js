@@ -8,16 +8,15 @@ define('factories/arena', [
 	ArenaModel
 ) {
 	return {
-		getInstance: function($el) {
+		getInstance: function(options) {
 			var view = new ArenaView({
-				el: $el
+				el: options.el
 			});
 
-			var configModel = new ArenaModel({
-				type: 'arena'
-			});
+			var configModel = new ArenaModel(options.settings);
 
 			var arena = new ArenaController({
+				parentComponent: options.parentComponent,
 				view: view,
 				models: {
 					config: configModel
@@ -25,6 +24,10 @@ define('factories/arena', [
 			});
 
 			return arena;
+		},
+
+		getSupportedProperties: function() {
+			return ArenaController.supportedProperties;
 		}
 	}
 });

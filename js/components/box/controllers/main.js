@@ -1,30 +1,21 @@
-define('controllers/arena', [
+define('components/box/controllers/main', [
 	'controllers/base_component'
 ], function(
 	BaseComponentController
 ) {
-	'use strict';
-
 	var controller = BaseComponentController.extend({
-		initialize : function(options) {
+		initialize: function(props) {
 			BaseComponentController.prototype.initialize.apply(this, arguments);
 		},
 
-		getParentComponent: function() {
-			return null;
-		},
-
-		registerElement: function() {
-
-		},
-
-		destroy : function() {
+		destroy: function() {
 			BaseComponentController.prototype.destroy.apply(this, arguments);
 		}
 	});
 
 	controller.supportedProperties = {
-
+		'aria-disabled': 'boolean',
+		'data-locked': 'boolean'
 	};
 
 	return controller;

@@ -15,6 +15,10 @@ define('views/base_component', [
 			return this.el.getBoundingClientRect();
 		},
 
+		getElement: function() {
+			return this.$el;
+		},
+
 		destroy : function() {
 			BaseView.prototype.destroy.apply(this, arguments);
 		}

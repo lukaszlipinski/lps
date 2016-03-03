@@ -1,9 +1,7 @@
 define('views/arena', [
-	'views/base_component',
-	'managers/components'
+	'views/base_component'
 ], function(
-	BaseComponentView,
-	componentsManager
+	BaseComponentView
 ) {
 	'use strict';
 
@@ -20,10 +18,14 @@ define('views/arena', [
 			var $document = $(document);
 
 			this.$el.on('mousedown.' + eventScopeName, '[draggable]', function(e) {
-				var $el = $(e.currentTarget);
+				e.stopPropagation();
+
+				var el = e.currentTarget;
+				var $el = $(el);
+
 				var startX = e.pageX,
 					startY = e.pageY,
-					component = componentsManager.getComponent($el.attr('data-component-id')),
+					component = window.CM.getComponent(el),
 					componentRect = component.getRect(),
 					parentComponentRect = component.getParentComponent().getRect();
 

@@ -1,9 +1,15 @@
 define('globals/components_factories', [
-	'components/button/factories/main'
+	'factories/arena',
+	'components/button/factories/main',
+	'components/box/factories/main'
 ], function(
-	ButtonComponentFactory
+	arenaFactory,
+	buttonComponentFactory,
+	boxComponentFactory
 ) {
 	return {
-		button: ButtonComponentFactory
+		arena: arenaFactory,
+		button: buttonComponentFactory,
+		box: boxComponentFactory
 	};
 });

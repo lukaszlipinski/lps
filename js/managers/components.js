@@ -10,8 +10,10 @@ define('managers/components', [
 	var uniqueId = 0;
 	var componentsRegister = {};
 
-	return {
-		getComponent: function(id) {
+	var manager = {
+		getComponent: function(el) {
+			var id = el.getAttribute('data-component-id');
+
 			return componentsRegister[id];
 		},
 		registerComponentInstance: function(el, parentComponent) {
@@ -19,6 +21,10 @@ define('managers/components', [
 			var type = $el.attr('data-component');
 			var id = 'c' + uniqueId++;
 			var factory = componentsFactories[type];
+
+			if (!factory) {
+				throw 'Can not find factory for given type:' + type;
+			}
 
 			$el.attr('data-component-id', id);
 
@@ -77,4 +83,8 @@ define('managers/components', [
 			return part[1];
 		}
 	};
+
+	window.CM = manager;
+
+	return manager;
 });
