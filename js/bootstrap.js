@@ -24,16 +24,12 @@ require([
 	'controllers/arena',
 	'views/arena',
 	'jquery',
-	'components/button',
-	'prototypes/position',
-	'prototypes/css_class'
+	'managers/components'
 ], function(
 	ArenaController,
 	ArenaView,
 	$,
-	ButtonComponent,
-	Position,
-	CssClass
+	componentsManager
 ) {
 	'use strict';
 
@@ -45,9 +41,15 @@ require([
 		})
 	});
 
+	$arena.find('[data-component]').each(function(index, el) {
+		var component = componentsManager.getComponentInstance(el);
+
+		arena.registerElement(component);
+	});
 
 
-	arena.addElement(new ButtonComponent([
+
+	/*arena.addElement(new ButtonComponent([
 		new CssClass('button'),
 		new Position(10, 10)
 	]));
@@ -55,5 +57,5 @@ require([
 	arena.addElement(new ButtonComponent([
 		new CssClass('button'),
 		new Position(240, 10)
-	]));
+	]));*/
 });

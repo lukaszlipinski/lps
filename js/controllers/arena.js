@@ -12,6 +12,10 @@ define('controllers/arena', [
 			this.view.render();
 		},
 
+		registerElement: function() {
+
+		},
+
 		destroy : function() {
 			BaseController.prototype.destroy.apply(this, arguments);
 		}
