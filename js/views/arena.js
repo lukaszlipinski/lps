@@ -23,12 +23,9 @@ define('views/arena', [
 				var $el = $(e.currentTarget);
 				var startX = e.pageX,
 					startY = e.pageY,
-					//startRect = e.currentTarget.getBoundingClientRect(),
 					component = componentsManager.getComponent($el.attr('data-component-id')),
-					startRect = component.getRect(),
+					componentRect = component.getRect(),
 					parentComponentRect = component.getParentComponent().getRect();
-
-				console.log(component.isLocked());
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					e.preventDefault();
@@ -36,9 +33,17 @@ define('views/arena', [
 					var currentX = e.pageX,
 						currentY = e.pageY;
 
+					var currentTop = componentRect.top + (currentY - startY) - parentComponentRect.top,
+						currentLeft = componentRect.left + (currentX - startX) - parentComponentRect.left;
+
+					if (component.isLocked()) {
+						currentTop = Math.max(0, Math.min(parentComponentRect.height - componentRect.height, currentTop));
+						currentLeft = Math.max(0, Math.min(parentComponentRect.width - componentRect.width, currentLeft));
+					}
+
 					$el.css({
-						top: startRect.top + (currentY - startY) - parentComponentRect.top,
-						left: startRect.left + (currentX - startX) - parentComponentRect.left
+						top: currentTop,
+						left: currentLeft
 					});
 				});
 
