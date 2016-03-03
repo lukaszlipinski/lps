@@ -12,19 +12,12 @@ define('controllers/base', [
 		collections: {},
 		models: {},
 		strategies: {},
-		parentComponent: null,
 
 		initialize : function(options) {
 			this.view = options.view || null;
 			this.collections = options.collections || {};
 			this.models = options.models || {};
 			this.strategies = options.strategies || {};
-
-			this.parentComponent = options.parentComponent || null;
-		},
-
-		getParentComponent: function() {
-			return this.parentComponent;
 		},
 
 		getCollection : function(name) {

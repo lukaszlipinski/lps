@@ -1,4 +1,4 @@
-define('components/button', [
+define('components/button/controllers/main', [
 	'controllers/base_component'
 ], function(
 	BaseComponentController
@@ -16,7 +16,7 @@ define('components/button', [
 	controller.supportedProperties = {
 		'aria-disabled': 'boolean',
 		'aria-pressed': 'boolean',
-		'aria-locked': 'boolean'
+		'data-locked': 'boolean'
 	};
 
 	return controller;

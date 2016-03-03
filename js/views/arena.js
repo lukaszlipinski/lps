@@ -1,17 +1,17 @@
 define('views/arena', [
-	'views/base',
+	'views/base_component',
 	'managers/components'
 ], function(
-	BaseView,
+	BaseComponentView,
 	componentsManager
 ) {
 	'use strict';
 
 	var eventScopeName = 'drag_drop';
 
-	return BaseView.extend({
+	return BaseComponentView.extend({
 		initialize : function() {
-			BaseView.prototype.initialize.apply(this, arguments);
+			BaseComponentView.prototype.initialize.apply(this, arguments);
 
 			this.initializeEventListeners();
 		},
@@ -23,8 +23,12 @@ define('views/arena', [
 				var $el = $(e.currentTarget);
 				var startX = e.pageX,
 					startY = e.pageY,
-					startRect = e.currentTarget.getBoundingClientRect(),
-					component = componentsManager.getComponent($el.attr('data-component-id'));
+					//startRect = e.currentTarget.getBoundingClientRect(),
+					component = componentsManager.getComponent($el.attr('data-component-id')),
+					startRect = component.getRect(),
+					parentComponentRect = component.getParentComponent().getRect();
+
+				console.log(component.isLocked());
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					e.preventDefault();
@@ -33,8 +37,8 @@ define('views/arena', [
 						currentY = e.pageY;
 
 					$el.css({
-						top: startRect.top + (currentY - startY),
-						left: startRect.left + (currentX - startX)
+						top: startRect.top + (currentY - startY) - parentComponentRect.top,
+						left: startRect.left + (currentX - startX) - parentComponentRect.left
 					});
 				});
 
@@ -50,7 +54,7 @@ define('views/arena', [
 		},
 
 		destroy : function() {
-			BaseView.prototype.destroy.apply(this, arguments);
+			BaseComponentView.prototype.destroy.apply(this, arguments);
 		}
 	});
 });

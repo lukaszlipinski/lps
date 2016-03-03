@@ -1,4 +1,4 @@
-define('models/arena', [
+define('components/button/models/main', [
 	'models/base_component'
 ], function(
 	BaseComponentModel
@@ -6,6 +6,11 @@ define('models/arena', [
 	'use strict';
 
 	return BaseComponentModel.extend({
+		defaults: {
+			disabled: false,
+			pressed: false,
+			locked: false
+		},
 		initialize: function(options) {
 			BaseComponentModel.prototype.initialize.apply(this, arguments);
 		},

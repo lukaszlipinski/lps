@@ -1,15 +1,17 @@
 define('controllers/arena', [
-	'controllers/base'
+	'controllers/base_component'
 ], function(
-	BaseController
+	BaseComponentController
 ) {
 	'use strict';
 
-	return BaseController.extend({
+	return BaseComponentController.extend({
 		initialize : function(options) {
-			BaseController.prototype.initialize.apply(this, arguments);
+			BaseComponentController.prototype.initialize.apply(this, arguments);
+		},
 
-			this.view.render();
+		getParentComponent: function() {
+			return null;
 		},
 
 		registerElement: function() {
@@ -17,7 +19,7 @@ define('controllers/arena', [
 		},
 
 		destroy : function() {
-			BaseController.prototype.destroy.apply(this, arguments);
+			BaseComponentController.prototype.destroy.apply(this, arguments);
 		}
 	});
 });

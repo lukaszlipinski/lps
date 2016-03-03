@@ -21,48 +21,22 @@ requirejs.config({
 
 
 require([
-	'controllers/arena',
-	'views/arena',
-	'models/arena',
 	'jquery',
-	'managers/components'
+	'managers/components',
+	'factories/arena'
 ], function(
-	ArenaController,
-	ArenaView,
-	ArenaModel,
 	$,
-	componentsManager
+	componentsManager,
+	arenaFactory
 ) {
 	'use strict';
 
 	var $arena = $('[data-component="arena"]');
-
-	var arena = new ArenaController({
-		view: new ArenaView({
-			el: $arena
-		}),
-		models: {
-			config: new ArenaModel({
-				type: 'arena'
-			})
-		}
-	});
+	var arena = arenaFactory.getInstance($arena);
 
 	$arena.find('[data-component]').each(function(index, el) {
 		var component = componentsManager.registerComponentInstance(el, arena);
 
 		arena.registerElement(component);
 	});
-
-
-
-	/*arena.addElement(new ButtonComponent([
-		new CssClass('button'),
-		new Position(10, 10)
-	]));
-
-	arena.addElement(new ButtonComponent([
-		new CssClass('button'),
-		new Position(240, 10)
-	]));*/
 });

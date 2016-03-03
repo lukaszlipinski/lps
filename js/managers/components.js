@@ -1,11 +1,11 @@
 define('managers/components', [
 	'jquery',
 	'underscore',
-	'globals/components'
+	'globals/components_factories'
 ], function(
 	$,
 	_,
-	components
+	componentsFactories
 ) {
 	var uniqueId = 0;
 	var componentsRegister = {};
@@ -17,15 +17,15 @@ define('managers/components', [
 		registerComponentInstance: function(el, parentComponent) {
 			var $el = $(el);
 			var type = $el.attr('data-component');
-			var componentDefinition = components[type];
 			var id = 'c' + uniqueId++;
+			var factory = componentsFactories[type];
 
 			$el.attr('data-component-id', id);
 
-			var instance = new components[type]({
-				el: $el,
+			var instance = new factory.getInstance({
+				el: el,
 				parentComponent: parentComponent,
-				settings: _.extend(this.getSettings($el, componentDefinition.supportedProperties), {
+				settings: _.extend(this.getSettings($el, factory.getSupportedProperties()), {
 					component_id: id,
 					type: type
 				})
