@@ -84,7 +84,5 @@ define('managers/components', [
 		}
 	};
 
-	window.CM = manager;
-
 	return manager;
 });

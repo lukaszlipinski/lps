@@ -29,6 +29,8 @@ require([
 ) {
 	'use strict';
 
+	window.CM = componentsManager;
+
 	function getComponentsTree(el, type) {
 		var found = [];
 		var children = el.children;
@@ -63,6 +65,4 @@ require([
 			componentsManager.getComponent(item.parent)
 		);
 	});
-
-
 });
