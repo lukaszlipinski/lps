@@ -8,7 +8,8 @@ define('components/box/models/main', [
 	return BaseComponentModel.extend({
 		defaults: {
 			disabled: false,
-			locked: false
+			locked: false,
+			selected: false
 		},
 		initialize: function(options) {
 			BaseComponentModel.prototype.initialize.apply(this, arguments);

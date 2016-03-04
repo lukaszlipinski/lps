@@ -21,3 +21,8 @@
 .arena .box2 {
 	background-color: green;
 }
+
+.arena [aria-selected="true"] {
+	border:1px solid black;
+	margin:-1px 0 0 -1px;
+}

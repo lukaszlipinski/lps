@@ -19,7 +19,6 @@ requirejs.config({
 	}
 });
 
-
 require([
 	'jquery',
 	'managers/components'

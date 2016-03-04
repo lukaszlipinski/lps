@@ -1,7 +1,9 @@
 define('components/arena/views/main', [
-	'views/base_component'
+	'views/base_component',
+	'jquery'
 ], function(
-	BaseComponentView
+	BaseComponentView,
+	$
 ) {
 	'use strict';
 
@@ -15,6 +17,22 @@ define('components/arena/views/main', [
 		},
 
 		initializeEventListeners: function() {
+			this.initializeDragDrop();
+			this.initializeSelectingElements();
+		},
+
+		initializeSelectingElements: function() {
+			this.$el.on('click', '[data-component]', function(e) {
+				var el = e.currentTarget;
+				var component = window.CM.getComponent(el);
+
+				component.toggleSelection();
+
+				e.stopPropagation();
+			});
+		},
+
+		initializeDragDrop: function() {
 			var $document = $(document);
 
 			this.$el.on('mousedown.' + eventScopeName, '[draggable]', function(e) {

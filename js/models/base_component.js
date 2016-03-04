@@ -14,6 +14,18 @@ define('models/base_component', [
 			return this.get('locked') === true;
 		},
 
+		isSelected: function() {
+			return this.get('selected') === true;
+		},
+
+		toggleSelection: function() {
+			this.set('selected', !this.isSelected());
+		},
+
+		onToggleSelection: function(obj, callback) {
+			obj.listenTo(this, 'change:selected', callback);
+		},
+
 		destroy: function() {
 
 		}

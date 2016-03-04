@@ -9,7 +9,8 @@ define('components/button/models/main', [
 		defaults: {
 			disabled: false,
 			pressed: false,
-			locked: false
+			locked: false,
+			selected: false
 		},
 		initialize: function(options) {
 			BaseComponentModel.prototype.initialize.apply(this, arguments);

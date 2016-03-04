@@ -19,6 +19,10 @@ define('views/base_component', [
 			return this.$el;
 		},
 
+		toggleSelection: function(selected) {
+			this.$el.attr('aria-selected', selected);
+		},
+
 		destroy : function() {
 			BaseView.prototype.destroy.apply(this, arguments);
 		}
