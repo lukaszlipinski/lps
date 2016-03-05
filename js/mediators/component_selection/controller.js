@@ -24,6 +24,19 @@ define('mediators/component_selection/controller', [
 			}
 		},
 
+		unSelectComponentsTree: function(selectedComponent) {
+			var components = CM.getComponents();
+			var selectedComponentParent = selectedComponent.getParentComponent();
+
+			for(var id in components) {
+				if (components.hasOwnProperty(id)) {
+					if (selectedComponentParent !== components[id].getParentComponent()) {
+						components[id].unSelect();
+					}
+				}
+			}
+		},
+
 		onComponentSelection: function(data) {
 			var CM = window.CM;
 			var componentToSelect = CM.getComponent(data.el);
@@ -36,6 +49,8 @@ define('mediators/component_selection/controller', [
 			}
 
 			if (componentToSelect.getType() !== componentsEnums.ARENA) {
+				this.unSelectComponentsTree(componentToSelect);
+
 				componentToSelect.toggleSelection();
 			}
 		},
