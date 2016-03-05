@@ -53,33 +53,16 @@ define('controllers/base_component', [
 			return this.getModel('config').isLocked();
 		},
 
-		setPosition: function(x, y) {
-			this.getModel('config').setPosition(x, y);
+		setPosition: function(rect) {
+			this.getModel('config').setPosition(rect.left, rect.top);
 		},
 
-		getControllerRect: function() {
-			var configModel = this.getModel('config');
-
-			return {
-				width: configModel.getWidth(),
-				height:configModel.getHeight(),
-				top:configModel.getTop(),
-				left:configModel.getLeft()
-			}
-		},
-
-		getViewRect: function() {
-			return this.view.getViewRect();
+		getRect: function() {
+			return this.view.getRect();
 		},
 
 		getElement: function() {
 			return this.view.getElement();
-		},
-
-		onPositionChange: function() {
-			var position = this.getModel('config').getPosition();
-
-			this.view.setPosition(position.x, position.y);
 		},
 
 		onToggleSelection: function() {

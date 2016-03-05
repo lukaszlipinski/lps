@@ -21,8 +21,8 @@ define('mediators/drag_drop/view', [
 				var component = components[i];
 
 				positions[component.getId()] = {
-					child: component.getViewRect(),
-					parent: component.getParentComponent().getViewRect()
+					child: component.getRect(),
+					parent: component.getParentComponent().getRect()
 				};
 			}
 
@@ -66,6 +66,7 @@ define('mediators/drag_drop/view', [
 						}
 
 						view.moveElement(selectedComponent.getElement(), currentLeft, currentTop);
+						selectedComponent.setPosition(selectedComponent.getRect());
 					}
 				});
 

@@ -62,15 +62,12 @@ define('models/base_component', [
 		},
 
 		setPosition: function(x, y) {
-			console.log("set positon", x, y);
 			this.set({
 				left: x,
 				top: y
 			}, {
 				silent: true
 			});
-
-			this.trigger('change:custom_position')
 		},
 
 		onPositionChange: function(obj, callback) {

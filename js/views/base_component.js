@@ -11,7 +11,7 @@ define('views/base_component', [
 
 		},
 
-		getViewRect: function() {
+		getRect: function() {
 			return this.el.getBoundingClientRect();
 		},
 
