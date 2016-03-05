@@ -10,6 +10,10 @@ define('models/base_component', [
 
 		},
 
+		getType: function() {
+			return this.get('type');
+		},
+
 		isLocked: function() {
 			return this.get('locked') === true;
 		},

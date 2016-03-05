@@ -24,6 +24,10 @@ define('controllers/base_component', [
 			return this.parentComponent;
 		},
 
+		getType: function() {
+			return this.getModel('config').getType();
+		},
+
 		select: function() {
 			this.getModel('config').select();
 		},

@@ -1,7 +1,9 @@
 define('mediators/component_selection/controller', [
-	'controllers/base'
+	'controllers/base',
+	'enums/components'
 ], function(
-	BaseController
+	BaseController,
+	componentsEnums
 ) {
 	return BaseController.extend({
 		initialize: function() {
@@ -28,7 +30,12 @@ define('mediators/component_selection/controller', [
 			var allComponents = CM.getComponents();
 
 			this.unSelectComponents(allComponents);
-			componentToSelect.toggleSelection();
+
+			if (componentToSelect.getType() === componentsEnums.ARENA) {
+				//do nothing
+			} else {
+				componentToSelect.toggleSelection();
+			}
 		},
 
 		destroy: function() {
