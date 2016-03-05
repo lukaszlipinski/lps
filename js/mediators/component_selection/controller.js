@@ -36,12 +36,3 @@ define('mediators/component_selection/controller', [
 		}
 	});
 });
-
-
-/*window.CM.getComponent(el)
-
-return {
-	selectComponent: function(component) {
-		component.toggleSelection();
-	}
-}*/
