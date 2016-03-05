@@ -18,6 +18,7 @@ define('controllers/base_component', [
 			var configModel = this.getModel('config');
 
 			configModel.onToggleSelection(this, this.onToggleSelection.bind(this));
+			configModel.onPositionChange(this, this.onPositionChange.bind(this))
 		},
 
 		getParentComponent: function() {
@@ -26,6 +27,10 @@ define('controllers/base_component', [
 
 		getType: function() {
 			return this.getModel('config').getType();
+		},
+
+		isSelected: function() {
+			return this.getModel('config').isSelected();
 		},
 
 		select: function() {
@@ -44,12 +49,33 @@ define('controllers/base_component', [
 			return this.getModel('config').isLocked();
 		},
 
-		getRect: function() {
-			return this.view.getRect();
+		setPosition: function(x, y) {
+			this.getModel('config').setPosition(x, y);
+		},
+
+		getControllerRect: function() {
+			var configModel = this.getModel('config');
+
+			return {
+				width: configModel.getWidth(),
+				height:configModel.getHeight(),
+				top:configModel.getTop(),
+				left:configModel.getLeft()
+			}
+		},
+
+		getViewRect: function() {
+			return this.view.getViewRect();
 		},
 
 		getElement: function() {
 			return this.view.getElement();
+		},
+
+		onPositionChange: function() {
+			var position = this.getModel('config').getPosition();
+
+			this.view.setPosition(position.x, position.y);
 		},
 
 		onToggleSelection: function() {

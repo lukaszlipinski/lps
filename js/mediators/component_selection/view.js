@@ -16,7 +16,7 @@ define('mediators/component_selection/view', [
 			$('body').on('click', '[data-component]', function(e) {
 				var el = e.currentTarget;
 
-				view.trigger('component:selected', {
+				view.trigger('component:select', {
 					el: el,
 					shiftKey: e.shiftKey,
 					ctrlKey: e.ctrlKey || e.metaKey

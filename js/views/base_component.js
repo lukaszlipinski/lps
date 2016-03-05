@@ -11,12 +11,19 @@ define('views/base_component', [
 
 		},
 
-		getRect: function() {
+		getViewRect: function() {
 			return this.el.getBoundingClientRect();
 		},
 
 		getElement: function() {
 			return this.$el;
+		},
+
+		setPosition: function(x, y) {
+			this.$el.css({
+				top: y,
+				left: x
+			});
 		},
 
 		toggleSelection: function(selected) {

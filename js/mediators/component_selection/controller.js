@@ -13,7 +13,7 @@ define('mediators/component_selection/controller', [
 		},
 
 		initializeEventListeners: function() {
-			this.view.on('component:selected', this.onComponentSelection.bind(this));
+			this.view.on('component:select', this.onComponentSelection.bind(this));
 		},
 
 		unSelectComponents: function(components) {

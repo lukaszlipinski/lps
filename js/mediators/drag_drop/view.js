@@ -15,19 +15,16 @@ define('mediators/drag_drop/view', [
 		},
 
 		initializeEventListeners: function() {
+			var view = this;
 			var $document = $(document);
 
-			this.$el.on('mousedown.' + eventScopeName, '[draggable]', function(e) {
+			this.$el.on('mousedown.' + eventScopeName, '[draggable="true"]', function(e) {
 				var el = e.currentTarget;
-				var $el = $(el);
 
 				e.stopPropagation();
 
 				var startX = e.pageX,
-					startY = e.pageY,
-					component = window.CM.getComponent(el),
-					componentRect = component.getRect(),
-					parentComponentRect = component.getParentComponent().getRect();
+					startY = e.pageY;
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					e.preventDefault();
@@ -35,24 +32,31 @@ define('mediators/drag_drop/view', [
 					var currentX = e.pageX,
 						currentY = e.pageY;
 
-					var currentTop = componentRect.top + (currentY - startY) - parentComponentRect.top,
-						currentLeft = componentRect.left + (currentX - startX) - parentComponentRect.left;
-
-					if (component.isLocked()) {
-						currentTop = Math.max(0, Math.min(parentComponentRect.height - componentRect.height, currentTop));
-						currentLeft = Math.max(0, Math.min(parentComponentRect.width - componentRect.width, currentLeft));
-					}
-
-					$el.css({
-						top: currentTop,
-						left: currentLeft
+					view.trigger('component:move', {
+						diffX: currentX - startX,
+						diffY: currentY - startY
 					});
 				});
 
-				$document.on('mouseup.' + eventScopeName, function() {
+				$document.on('mouseup.' + eventScopeName, function(e) {
+					var currentX = e.pageX,
+						currentY = e.pageY;
+
 					$document.off('mousemove.' + eventScopeName);
 					$document.off('mouseup.' + eventScopeName);
+
+					view.trigger('component:move:stop', {
+						diffX: currentX - startX,
+						diffY: currentY - startY
+					});
 				});
+			});
+		},
+
+		moveElement: function($el, posX, posY) {
+			$el.css({
+				top: posY,
+				left: posX
 			});
 		},
 

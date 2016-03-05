@@ -11,6 +11,19 @@ define('managers/components', [
 	var componentsRegister = {};
 
 	var manager = {
+		getSelectedComponents: function() {
+			var selected = [];
+
+			for(var id in componentsRegister) {
+				if (componentsRegister.hasOwnProperty(id)) {
+					if (componentsRegister[id].isSelected()) {
+						selected.push(componentsRegister[id]);
+					}
+				}
+			}
+
+			return selected;
+		},
 		getComponents: function() {
 			return componentsRegister;
 		},
