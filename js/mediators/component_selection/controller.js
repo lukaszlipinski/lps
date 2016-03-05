@@ -28,12 +28,14 @@ define('mediators/component_selection/controller', [
 			var CM = window.CM;
 			var componentToSelect = CM.getComponent(data.el);
 			var allComponents = CM.getComponents();
+			var isCtrlPressed = data.ctrlKey;
+			//var isShiftPressed = data.shiftKey;
 
-			this.unSelectComponents(allComponents);
+			if (!isCtrlPressed) {
+				this.unSelectComponents(allComponents);
+			}
 
-			if (componentToSelect.getType() === componentsEnums.ARENA) {
-				//do nothing
-			} else {
+			if (componentToSelect.getType() !== componentsEnums.ARENA) {
 				componentToSelect.toggleSelection();
 			}
 		},
