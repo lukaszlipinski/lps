@@ -18,18 +18,7 @@ define('components/arena/views/main', [
 
 		initializeEventListeners: function() {
 			this.initializeDragDrop();
-			this.initializeSelectingElements();
-		},
 
-		initializeSelectingElements: function() {
-			this.$el.on('click', '[data-component]', function(e) {
-				var el = e.currentTarget;
-				var component = window.CM.getComponent(el);
-
-				component.toggleSelection();
-
-				e.stopPropagation();
-			});
 		},
 
 		initializeDragDrop: function() {

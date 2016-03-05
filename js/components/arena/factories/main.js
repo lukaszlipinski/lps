@@ -1,11 +1,13 @@
 define('components/arena/factories/main', [
 	'components/arena/controllers/main',
 	'components/arena/views/main',
-	'components/arena/models/main'
+	'components/arena/models/main',
+	'mediators/component_selection/factory'
 ], function(
 	ArenaController,
 	ArenaView,
-	ArenaModel
+	ArenaModel,
+	componentSelectionFactory
 ) {
 	return {
 		getInstance: function(options) {
@@ -20,7 +22,10 @@ define('components/arena/factories/main', [
 				view: view,
 				models: {
 					config: configModel
-				}
+				},
+				features: [
+					componentSelectionFactory.getInstance(options.el)
+				]
 			});
 
 			return arena;

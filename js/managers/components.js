@@ -11,6 +11,9 @@ define('managers/components', [
 	var componentsRegister = {};
 
 	var manager = {
+		getComponents: function() {
+			return componentsRegister;
+		},
 		getComponent: function(el) {
 			var id = el.getAttribute('data-component-id');
 

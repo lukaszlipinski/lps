@@ -24,6 +24,14 @@ define('controllers/base_component', [
 			return this.parentComponent;
 		},
 
+		select: function() {
+			this.getModel('config').select();
+		},
+
+		unSelect: function() {
+			this.getModel('config').unSelect();
+		},
+
 		toggleSelection: function() {
 			this.getModel('config').toggleSelection();
 		},

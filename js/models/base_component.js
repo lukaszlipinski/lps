@@ -18,6 +18,14 @@ define('models/base_component', [
 			return this.get('selected') === true;
 		},
 
+		select: function() {
+			this.set('selected', true);
+		},
+
+		unSelect: function() {
+			this.set('selected', false);
+		},
+
 		toggleSelection: function() {
 			this.set('selected', !this.isSelected());
 		},

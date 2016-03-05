@@ -12,12 +12,14 @@ define('controllers/base', [
 		collections: {},
 		models: {},
 		strategies: {},
+		features: {},
 
 		initialize : function(options) {
 			this.view = options.view || null;
 			this.collections = options.collections || {};
 			this.models = options.models || {};
 			this.strategies = options.strategies || {};
+			this.features = options.features || {};
 		},
 
 		getCollection : function(name) {
