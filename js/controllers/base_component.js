@@ -18,7 +18,6 @@ define('controllers/base_component', [
 			var configModel = this.getModel('config');
 
 			configModel.onToggleSelection(this, this.onToggleSelection.bind(this));
-			configModel.onPositionChange(this, this.onPositionChange.bind(this))
 		},
 
 		getParentComponent: function() {
