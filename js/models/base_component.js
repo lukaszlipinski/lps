@@ -10,6 +10,10 @@ define('models/base_component', [
 
 		},
 
+		getId: function() {
+			return this.get('component_id');
+		},
+
 		getType: function() {
 			return this.get('type');
 		},

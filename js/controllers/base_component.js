@@ -25,6 +25,10 @@ define('controllers/base_component', [
 			return this.parentComponent;
 		},
 
+		getId: function() {
+			return this.getModel('config').getId();
+		},
+
 		getType: function() {
 			return this.getModel('config').getType();
 		},
