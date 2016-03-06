@@ -2,12 +2,14 @@ define('components/arena/factories/main', [
 	'components/arena/controllers/main',
 	'components/arena/views/main',
 	'components/arena/models/main',
-	'features/drag_drop/factory'
+	'features/drag_drop/factory',
+	'features/resize/factory'
 ], function(
 	ArenaController,
 	ArenaView,
 	ArenaModel,
-	dragDropFactory
+	dragDropFactory,
+	resizeFactory
 ) {
 	return {
 		getInstance: function(options) {
@@ -24,7 +26,8 @@ define('components/arena/factories/main', [
 					config: configModel
 				},
 				features: [
-					dragDropFactory.getInstance(options.el)
+					dragDropFactory.getInstance(options.el),
+					resizeFactory.getInstance(options.el)
 				]
 			});
 
