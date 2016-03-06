@@ -4,7 +4,6 @@ requirejs.config({
 	paths: {
 		backbone : 'libs/backbone-min',
 		jquery : 'libs/jquery-2.2.0.min',
-		jquery_cookie: 'libs/jquery.cookie',
 		underscore : 'libs/underscore-min',
 		text : 'libs/text.require'
 	},

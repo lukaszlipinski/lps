@@ -71,9 +71,6 @@ define('mediators/drag_drop/view', [
 				});
 
 				$document.on('mouseup.' + eventScopeName, function(e) {
-					var currentX = e.pageX,
-						currentY = e.pageY;
-
 					$document.off('mousemove.' + eventScopeName);
 					$document.off('mouseup.' + eventScopeName);
 				});
