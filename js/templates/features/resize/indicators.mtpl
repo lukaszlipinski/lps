@@ -1,4 +1,5 @@
-<%
-var sides = ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'];
-
-%>
+<div id="widget_resize" class="widget-feature resize"><%
+    for(var i = 0; i < sides.length; i++) { %>
+        <div class="square <%= sides[i] %>"></div>
+    <% } %>
+</div>

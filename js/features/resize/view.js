@@ -7,6 +7,8 @@ define('features/resize/view', [
 ) {
 
 	return BaseView.extend({
+		$squares: null,
+
 		initialize: function() {
 			BaseView.prototype.initialize.apply(this, arguments);
 
@@ -15,6 +17,20 @@ define('features/resize/view', [
 
 		initializeEventListeners: function() {
 
+		},
+
+		render: function(sides) {
+			var $body = $('body');
+
+			if (!$body.find('#widget_resize').length) {
+				var template = this.getTemplate('squares', {
+					sides: sides
+				});
+
+				$body.append(template);
+			}
+
+			this.$squares = $body.find('#widget_resize');
 		},
 
 		destroy: function() {

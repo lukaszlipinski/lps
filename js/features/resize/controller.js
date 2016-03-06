@@ -8,10 +8,15 @@ define('features/resize/controller', [
 			BaseController.prototype.initialize.apply(this, arguments);
 
 			this.initializeEventListeners();
+			this.view.render(this.getSides());
 		},
 
 		initializeEventListeners: function() {
 
+		},
+
+		getSides: function() {
+			return ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'];
 		},
 
 		destroy: function() {

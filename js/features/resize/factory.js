@@ -1,14 +1,19 @@
 define('features/resize/factory', [
 	'features/resize/controller',
-	'features/resize/view'
+	'features/resize/view',
+	'text!templates/features/resize/indicators.mtpl'
 ], function(
 	Controller,
-	View
+	View,
+	squaresTemplate
 ) {
 	return {
 		getInstance: function(el) {
 			var view = new View({
-				el: el
+				el: el,
+				templates: {
+					squares: squaresTemplate
+				}
 			});
 
 			var controller = new Controller({

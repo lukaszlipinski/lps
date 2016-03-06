@@ -34,3 +34,47 @@ body {
 	border:1px solid black;
 	margin:-1px 0 0 -1px;
 }
+
+
+.widget-feature.resize {
+	position: absolute;
+}
+
+.widget-feature.resize .square {
+	width:10px;
+	height:10px;
+	border:1px solid #00ffff;
+	position: absolute;
+}
+
+.widget-feature.resize .square.direction_n {
+
+}
+
+.widget-feature.resize .square.direction_nw {
+
+}
+
+.widget-feature.resize .square.direction_w {
+
+}
+
+.widget-feature.resize .square.direction_sw {
+
+}
+
+.widget-feature.resize .square.direction_s {
+
+}
+
+.widget-feature.resize .square.direction_se {
+
+}
+
+.widget-feature.resize .square.direction_e {
+
+}
+
+.widget-feature.resize .square.direction_ne {
+
+}
