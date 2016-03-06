@@ -6,27 +6,14 @@ define('mediators/drag_drop/view', [
 	$
 ) {
 	var eventScopeName = 'drag_drop';
+	var defaultZIndex = 1;
+	var draggingZIndex = 5;
 
 	return BaseView.extend({
 		initialize: function() {
 			BaseView.prototype.initialize.apply(this, arguments);
 
 			this.initializeEventListeners();
-		},
-
-		getPositions: function(components) {
-			var positions = {};
-
-			for (var i = 0; i < components.length; i++) {
-				var component = components[i];
-
-				positions[component.getId()] = {
-					child: component.getRect(),
-					parent: component.getParentComponent().getRect()
-				};
-			}
-
-			return positions;
 		},
 
 		initializeEventListeners: function() {
@@ -36,18 +23,35 @@ define('mediators/drag_drop/view', [
 			this.$el.on('mousedown.' + eventScopeName, '[draggable="true"]', function(e) {
 				var components = CM.getSelectedComponents();
 
+				if (!components.length) {
+					return;
+				}
+
 				e.stopPropagation();
 
 				var startX = e.pageX,
 					startY = e.pageY;
 
-				var startPositions = view.getPositions(components);
+				var startPositions = view.controller.getRects(components);
+				var map = view.controller.getEmptyMap();
+
+				view.controller.generateMap(
+					map,
+					view.controller.getRootElement(),
+					components[0].getParentComponent()//selected items always have the same parent
+				);
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					e.preventDefault();
 
 					var currentX = e.pageX,
 						currentY = e.pageY;
+
+					view.controller.setZIndexes(components, draggingZIndex);
+
+					var isOverDroppable = view.controller.isOverDroppableItem(
+						map,
+						currentX, currentY);
 
 					var CM = window.CM;
 					var selectedComponents = CM.getSelectedComponents();
@@ -73,6 +77,8 @@ define('mediators/drag_drop/view', [
 				$document.on('mouseup.' + eventScopeName, function(e) {
 					$document.off('mousemove.' + eventScopeName);
 					$document.off('mouseup.' + eventScopeName);
+
+					view.controller.setZIndexes(components, defaultZIndex);
 				});
 			});
 		},

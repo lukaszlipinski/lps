@@ -24,7 +24,7 @@ define('components/arena/controllers/main', [
 	});
 
 	controller.supportedProperties = {
-
+		'aria-dropeffect': 'string'
 	};
 
 	return controller;

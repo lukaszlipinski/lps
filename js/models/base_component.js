@@ -61,6 +61,18 @@ define('models/base_component', [
 			}
 		},
 
+		isDroppable: function() {
+			return this.get('dropeffect') && this.get('dropeffect') !== 'none';
+		},
+
+		getZIndex: function() {
+			return this.get('zindex');
+		},
+
+		setZIndex: function(value) {
+			this.set('zindex', value);
+		},
+
 		setPosition: function(x, y) {
 			this.set({
 				left: x,
@@ -70,8 +82,12 @@ define('models/base_component', [
 			});
 		},
 
-		onPositionChange: function(obj, callback) {
+		/*onPositionChange: function(obj, callback) {
 			obj.listenTo(this, 'change:custom_position', callback);
+		},*/
+
+		onZIndexChange: function(obj, callback) {
+			obj.listenTo(this, 'change:zindex', callback);
 		},
 
 		onToggleSelection: function(obj, callback) {

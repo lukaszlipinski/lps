@@ -20,10 +20,12 @@ requirejs.config({
 
 require([
 	'jquery',
-	'managers/components'
+	'managers/components',
+	'polyfills/array_includes'
 ], function(
 	$,
-	componentsManager
+	componentsManager,
+	voidPolyfillArrayIncludes
 ) {
 	'use strict';
 

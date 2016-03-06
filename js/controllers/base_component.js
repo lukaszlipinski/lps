@@ -18,6 +18,15 @@ define('controllers/base_component', [
 			var configModel = this.getModel('config');
 
 			configModel.onToggleSelection(this, this.onToggleSelection.bind(this));
+			configModel.onZIndexChange(this, this.onZIndexChange.bind(this));
+
+			this.setDefaults();
+		},
+
+		setDefaults: function() {
+			var configModel = this.getModel('config');
+
+			this.setZIndex()
 		},
 
 		getParentComponent: function() {
@@ -34,6 +43,14 @@ define('controllers/base_component', [
 
 		isSelected: function() {
 			return this.getModel('config').isSelected();
+		},
+
+		isDroppable: function() {
+			return this.getModel('config').isDroppable();
+		},
+
+		setZIndex: function(value) {
+			this.getModel('config').setZIndex(value);
 		},
 
 		select: function() {
@@ -62,6 +79,12 @@ define('controllers/base_component', [
 
 		getElement: function() {
 			return this.view.getElement();
+		},
+
+		onZIndexChange: function() {
+			var zIndex = this.getModel('config').getZIndex();
+
+			this.view.setZIndex(zIndex);
 		},
 
 		onToggleSelection: function() {

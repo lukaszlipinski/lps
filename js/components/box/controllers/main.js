@@ -15,7 +15,9 @@ define('components/box/controllers/main', [
 
 	controller.supportedProperties = {
 		'aria-disabled': 'boolean',
-		'data-locked': 'boolean'
+		'data-locked': 'boolean',
+		'aria-dropeffect': 'string',
+		'data-zindex': 'number'
 	};
 
 	return controller;

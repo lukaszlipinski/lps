@@ -24,8 +24,17 @@ define('managers/components', [
 
 			return selected;
 		},
+
 		getComponents: function() {
-			return componentsRegister;
+			var components = [];
+
+			for(var id in componentsRegister) {
+				if(componentsRegister.hasOwnProperty(id)) {
+					components.push(componentsRegister[id]);
+				}
+			}
+
+			return components;
 		},
 		getComponent: function(el) {
 			var id = el.getAttribute('data-component-id');

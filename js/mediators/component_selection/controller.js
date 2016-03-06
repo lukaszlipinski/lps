@@ -28,11 +28,9 @@ define('mediators/component_selection/controller', [
 			var components = CM.getComponents();
 			var selectedComponentParent = selectedComponent.getParentComponent();
 
-			for(var id in components) {
-				if (components.hasOwnProperty(id)) {
-					if (selectedComponentParent !== components[id].getParentComponent()) {
-						components[id].unSelect();
-					}
+			for(var i = 0; i < components.length; i++) {
+				if (selectedComponentParent !== components[i].getParentComponent()) {
+					components[i].unSelect();
 				}
 			}
 		},

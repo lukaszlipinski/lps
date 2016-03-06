@@ -22,6 +22,10 @@
 	background-color: green;
 }
 
+.arena .box3 {
+	background-color: blue;
+}
+
 .arena [aria-selected="true"] {
 	border:1px solid black;
 	margin:-1px 0 0 -1px;

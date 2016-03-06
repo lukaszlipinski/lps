@@ -16,7 +16,8 @@ define('components/button/controllers/main', [
 	controller.supportedProperties = {
 		'aria-disabled': 'boolean',
 		'aria-pressed': 'boolean',
-		'data-locked': 'boolean'
+		'data-locked': 'boolean',
+		'data-zindex': 'number'
 	};
 
 	return controller;

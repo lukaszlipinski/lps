@@ -11,9 +11,13 @@ define('mediators/drag_drop/factory', [
 				el: el
 			});
 
-			return new Controller({
+			var controller = new Controller({
 				view: view
-			})
+			});
+
+			view.controller = controller;
+
+			return controller;
 		}
 	}
 });

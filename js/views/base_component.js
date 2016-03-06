@@ -26,6 +26,10 @@ define('views/base_component', [
 			});
 		},
 
+		setZIndex: function(value) {
+			this.$el.css('zIndex', value);
+		},
+
 		toggleSelection: function(selected) {
 			this.$el.attr('aria-selected', selected);
 		},
