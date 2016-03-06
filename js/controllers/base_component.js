@@ -19,6 +19,7 @@ define('controllers/base_component', [
 
 			configModel.onToggleSelection(this, this.onToggleSelection.bind(this));
 			configModel.onZIndexChange(this, this.onZIndexChange.bind(this));
+			configModel.onVisibilityChange(this, this.onVisibilityChange.bind(this));
 
 			this.setDefaults();
 		},
@@ -31,6 +32,10 @@ define('controllers/base_component', [
 
 		getParentComponent: function() {
 			return this.parentComponent;
+		},
+
+		setParentComponent: function(component) {
+			this.parentComponent = component;
 		},
 
 		getId: function() {
@@ -69,16 +74,62 @@ define('controllers/base_component', [
 			return this.getModel('config').isLocked();
 		},
 
-		setPosition: function(rect) {
+		setPosition: function(rect, silent) {
 			this.getModel('config').setPosition(rect.left, rect.top);
+
+			if (!silent) {
+				this.view.setPosition(rect.left, rect.top);
+			}
 		},
 
 		getRect: function() {
-			return this.view.getRect();
+			return $.extend({}, this.view.getRect());
 		},
 
 		getElement: function() {
 			return this.view.getElement();
+		},
+
+		show: function() {
+			this.getModel('config').show();
+		},
+
+		hide: function() {
+			this.getModel('config').hide();
+		},
+
+		appendComponents: function(x, y, components) {
+			var _self = this;
+			var view = this.view;
+			var rect = this.getRect();
+
+			components.forEach(function(item) {
+				//Locked elements can not change their parent elements
+				if (item.isLocked()) {
+					return;
+				}
+
+				var $itemEl = item.getElement();
+				var itemRect = item.getRect();
+
+				itemRect.top = itemRect.top - rect.top;
+				itemRect.left = itemRect.left - rect.left;
+
+				item.setParentComponent(_self);
+				item.setPosition(itemRect, false);
+
+				view.appendElement($itemEl);
+			});
+		},
+
+		onVisibilityChange: function() {
+			var isVisible = this.getModel('config').isVisible();
+
+			if (isVisible) {
+				this.view.show();
+			} else {
+				this.view.hide();
+			}
 		},
 
 		onZIndexChange: function() {

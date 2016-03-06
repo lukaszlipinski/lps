@@ -24,7 +24,14 @@ define('components/arena/controllers/main', [
 	});
 
 	controller.supportedProperties = {
-		'aria-dropeffect': 'string'
+		'aria-dropeffect': {
+			type: 'string',
+			defaultValue: 'none'
+		},
+		'aria-hidden': {
+			type: 'boolean',
+			defaultValue: false
+		}
 	};
 
 	return controller;

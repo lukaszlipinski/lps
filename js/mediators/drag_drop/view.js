@@ -19,9 +19,11 @@ define('mediators/drag_drop/view', [
 		initializeEventListeners: function() {
 			var view = this;
 			var $document = $(document);
+			var CM = window.CM;
 
 			this.$el.on('mousedown.' + eventScopeName, '[draggable="true"]', function(e) {
 				var components = CM.getSelectedComponents();
+				var moved = false;
 
 				if (!components.length) {
 					return;
@@ -42,20 +44,17 @@ define('mediators/drag_drop/view', [
 				);
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
-					e.preventDefault();
-
+					var selectedComponents = CM.getSelectedComponents();
 					var currentX = e.pageX,
 						currentY = e.pageY;
 
-					view.controller.setZIndexes(components, draggingZIndex);
+					moved = true;
 
-					var isOverDroppable = view.controller.isOverDroppableItem(
-						map,
-						currentX, currentY);
+					e.preventDefault();
 
-					var CM = window.CM;
-					var selectedComponents = CM.getSelectedComponents();
+					view.controller.setZIndexes(selectedComponents, draggingZIndex);
 
+					//Moving elements
 					for (var i = 0; i < selectedComponents.length; i++) {
 						var selectedComponent = selectedComponents[i];
 						var componentRect = startPositions[selectedComponent.getId()].child,
@@ -70,13 +69,39 @@ define('mediators/drag_drop/view', [
 						}
 
 						view.moveElement(selectedComponent.getElement(), currentLeft, currentTop);
-						selectedComponent.setPosition(selectedComponent.getRect());
+						selectedComponent.setPosition(selectedComponent.getRect(), true);
+					}
+
+					var isOverDroppable = view.controller.isOverDroppableItem(
+						map,
+						currentX, currentY
+					);
+
+					if (isOverDroppable) {
+
 					}
 				});
 
 				$document.on('mouseup.' + eventScopeName, function(e) {
+					var currentX = e.pageX,
+						currentY = e.pageY;
+
 					$document.off('mousemove.' + eventScopeName);
 					$document.off('mouseup.' + eventScopeName);
+
+					//Dropping elements
+					if (moved) {
+						var isOverDroppable = view.controller.isOverDroppableItem(
+							map,
+							currentX, currentY
+						);
+
+						if (isOverDroppable) {
+							var dropPointComponent = view.controller.getElementFromPoint(currentX, currentY);
+							console.log(dropPointComponent.view.$el);
+							dropPointComponent.appendComponents(currentX, currentY, CM.getSelectedComponents());
+						}
+					}
 
 					view.controller.setZIndexes(components, defaultZIndex);
 				});

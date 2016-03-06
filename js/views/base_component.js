@@ -34,6 +34,18 @@ define('views/base_component', [
 			this.$el.attr('aria-selected', selected);
 		},
 
+		show: function() {
+			this.$el.show();
+		},
+
+		hide: function() {
+			this.$el.hide();
+		},
+
+		appendElement: function($el) {
+			$el.appendTo(this.$el);
+		},
+
 		destroy : function() {
 			BaseView.prototype.destroy.apply(this, arguments);
 		}

@@ -89,10 +89,10 @@ define('managers/components', [
 			return settings;
 		},
 
-		getPropertyValue: function($el, property, valType) {
-			var value = $el.attr(property);
+		getPropertyValue: function($el, propertyName, propDefinition) {
+			var value = $el.attr(propertyName) || propDefinition.defaultValue;
 
-			switch(valType) {
+			switch(propDefinition.type) {
 				case 'boolean':
 					return value === 'true';
 				case 'number':

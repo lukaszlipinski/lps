@@ -73,6 +73,18 @@ define('models/base_component', [
 			this.set('zindex', value);
 		},
 
+		show: function() {
+			this.set('visible', true);
+		},
+
+		hide: function() {
+			this.set('visible', false);
+		},
+
+		isVisible: function() {
+			return this.get('visible') === true;
+		},
+
 		setPosition: function(x, y) {
 			this.set({
 				left: x,
@@ -82,9 +94,9 @@ define('models/base_component', [
 			});
 		},
 
-		/*onPositionChange: function(obj, callback) {
-			obj.listenTo(this, 'change:custom_position', callback);
-		},*/
+		onVisibilityChange: function(obj, callback) {
+			obj.listenTo(this, 'change:visible', callback);
+		},
 
 		onZIndexChange: function(obj, callback) {
 			obj.listenTo(this, 'change:zindex', callback);

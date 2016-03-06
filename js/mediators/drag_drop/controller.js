@@ -125,6 +125,23 @@ define('mediators/drag_drop/controller', [
 			});
 		},
 
+		getElementFromPoint: function(x, y) {
+			var selectedComponents = CM.getSelectedComponents();
+
+			//Hide all dragged elements so they will not cover the drop point
+			selectedComponents.forEach(function(item) {
+				item.hide();
+			});
+
+			var el = document.elementFromPoint(x, y);
+
+			selectedComponents.forEach(function(item) {
+				item.show();
+			});
+
+			return CM.getComponent(el);
+		},
+
 		destroy: function() {
 			BaseController.prototype.destroy.apply(this, arguments);
 		}

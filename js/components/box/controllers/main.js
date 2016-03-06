@@ -14,10 +14,26 @@ define('components/box/controllers/main', [
 	});
 
 	controller.supportedProperties = {
-		'aria-disabled': 'boolean',
-		'data-locked': 'boolean',
-		'aria-dropeffect': 'string',
-		'data-zindex': 'number'
+		'aria-disabled': {
+			type: 'boolean',
+			defaultValue: false
+		},
+		'data-locked': {
+			type: 'boolean',
+			defaultValue: false
+		},
+		'aria-dropeffect': {
+			type: 'string',
+			defaultValue: 'none'
+		},
+		'data-zindex': {
+			type: 'number',
+			defaultValue: 1
+		},
+		'aria-hidden': {
+			type: 'boolean',
+			defaultValue: false
+		}
 	};
 
 	return controller;
