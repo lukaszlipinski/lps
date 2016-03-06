@@ -23,21 +23,25 @@ define('features/drag_drop/view', [
 			var $document = $(document);
 			var CM = window.CM;
 
-			this.$el.on('mousedown.' + eventScopeName, '[draggable="true"]', function(e) {
+			$document.on('mousedown.' + eventScopeName, '[draggable="true"], [data-component="arena"]', function(e) {
 				var isCtrlPressed = e.ctrlKey || e.metaKey;
 
 				var componentToSelect = CM.getComponent(e.currentTarget);
 				var allComponents = CM.getComponents();
 
 				//Handle selecting items
-				if (!isCtrlPressed && !componentToSelect.isSelected()) {
+				if ((!isCtrlPressed && !componentToSelect.isSelected()) || componentToSelect.getType() === componentsEnums.ARENA) {
 					view.unSelectComponents(allComponents);
 				}
 
 				if (componentToSelect.getType() !== componentsEnums.ARENA) {
 					view.unSelectComponentsTree(componentToSelect);
 
-					componentToSelect.select();
+					if (isCtrlPressed) {
+						componentToSelect.toggleSelection();
+					} else {
+						componentToSelect.select();
+					}
 				}
 
 				//Handle moving elements
