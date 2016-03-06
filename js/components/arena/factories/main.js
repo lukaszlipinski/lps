@@ -2,13 +2,11 @@ define('components/arena/factories/main', [
 	'components/arena/controllers/main',
 	'components/arena/views/main',
 	'components/arena/models/main',
-	'mediators/component_selection/factory',
 	'mediators/drag_drop/factory'
 ], function(
 	ArenaController,
 	ArenaView,
 	ArenaModel,
-	componentSelectionFactory,
 	dragDropFactory
 ) {
 	return {
@@ -26,7 +24,6 @@ define('components/arena/factories/main', [
 					config: configModel
 				},
 				features: [
-					//componentSelectionFactory.getInstance(options.el),
 					dragDropFactory.getInstance(options.el)
 				]
 			});
