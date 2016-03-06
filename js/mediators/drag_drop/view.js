@@ -1,9 +1,11 @@
 define('mediators/drag_drop/view', [
 	'views/base',
-	'jquery'
+	'jquery',
+	'enums/components'
 ], function(
 	BaseView,
-	$
+	$,
+	componentsEnums
 ) {
 	var eventScopeName = 'drag_drop';
 	var defaultZIndex = 1;
@@ -21,7 +23,45 @@ define('mediators/drag_drop/view', [
 			var $document = $(document);
 			var CM = window.CM;
 
+			$('body').on('click', '[data-component]', function(e) {
+				var el = e.currentTarget;
+				var isCtrlPressed = e.ctrlKey || e.metaKey;
+				var componentToSelect = CM.getComponent(e.currentTarget);
+				var allComponents = CM.getComponents();
+
+				if (!isCtrlPressed) {
+					//view.unSelectComponents(allComponents);
+				}
+
+				if (componentToSelect.getType() !== componentsEnums.ARENA) {
+					//view.unSelectComponentsTree(componentToSelect);
+
+					//componentToSelect.toggleSelection();
+				}
+
+				//e.stopPropagation();
+			});
+
 			this.$el.on('mousedown.' + eventScopeName, '[draggable="true"]', function(e) {
+				var isCtrlPressed = e.ctrlKey || e.metaKey;
+
+				var componentToSelect = CM.getComponent(e.currentTarget);
+				var allComponents = CM.getComponents();
+
+				if (!isCtrlPressed && !componentToSelect.isSelected()) {
+					view.unSelectComponents(allComponents);
+				}
+
+				//if (!componentToSelect.isSelected()) {
+					//e.stopPropagation();
+
+					if (componentToSelect.getType() !== componentsEnums.ARENA) {
+						view.unSelectComponentsTree(componentToSelect);
+
+						componentToSelect.select();
+					}
+				//}
+
 				var components = CM.getSelectedComponents();
 				var moved = false;
 
@@ -106,6 +146,25 @@ define('mediators/drag_drop/view', [
 					view.controller.setZIndexes(components, defaultZIndex);
 				});
 			});
+		},
+
+		unSelectComponents: function(components) {
+			for(var id in components) {
+				if (components.hasOwnProperty(id)) {
+					components[id].unSelect();
+				}
+			}
+		},
+
+		unSelectComponentsTree: function(selectedComponent) {
+			var components = CM.getComponents();
+			var selectedComponentParent = selectedComponent.getParentComponent();
+
+			for(var i = 0; i < components.length; i++) {
+				if (selectedComponentParent !== components[i].getParentComponent()) {
+					components[i].unSelect();
+				}
+			}
 		},
 
 		moveElement: function($el, posX, posY) {
