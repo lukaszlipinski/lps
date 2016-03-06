@@ -1,4 +1,4 @@
-define('mediators/drag_drop/view', [
+define('features/drag_drop/view', [
 	'views/base',
 	'jquery',
 	'enums/components'

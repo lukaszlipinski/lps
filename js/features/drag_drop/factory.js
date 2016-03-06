@@ -1,6 +1,6 @@
-define('mediators/drag_drop/factory', [
-	'mediators/drag_drop/controller',
-	'mediators/drag_drop/view'
+define('features/drag_drop/factory', [
+	'features/drag_drop/controller',
+	'features/drag_drop/view'
 ], function(
 	Controller,
 	View

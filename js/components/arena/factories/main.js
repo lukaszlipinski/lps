@@ -2,7 +2,7 @@ define('components/arena/factories/main', [
 	'components/arena/controllers/main',
 	'components/arena/views/main',
 	'components/arena/models/main',
-	'mediators/drag_drop/factory'
+	'features/drag_drop/factory'
 ], function(
 	ArenaController,
 	ArenaView,

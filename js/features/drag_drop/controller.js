@@ -1,4 +1,4 @@
-define('mediators/drag_drop/controller', [
+define('features/drag_drop/controller', [
 	'controllers/base'
 ], function(
 	BaseController
