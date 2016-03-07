@@ -8,15 +8,30 @@ define('features/resize/controller', [
 			BaseController.prototype.initialize.apply(this, arguments);
 
 			this.initializeEventListeners();
-			this.view.render(this.getSides());
+			this.view.renderSquares(this.getSides().both);
 		},
 
 		initializeEventListeners: function() {
+			this.view.on('el:dblclick', this.onDblClick.bind(this));
+		},
 
+		getType: function() {
+			return this.getModel('config').getType();
 		},
 
 		getSides: function() {
-			return ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'];
+			return {
+				both: ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'],
+				horizontally: [],
+				vertically: []
+			};
+		},
+
+		onDblClick: function() {
+			var sides = this.getSides();
+			var type = this.getType();
+
+			this.view.render(sides[type]);
 		},
 
 		destroy: function() {

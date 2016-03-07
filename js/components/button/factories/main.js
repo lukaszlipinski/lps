@@ -1,11 +1,13 @@
 define('components/button/factories/main', [
 	'components/button/views/main',
 	'components/button/models/main',
-	'components/button/controllers/main'
+	'components/button/controllers/main',
+	'features/resize/factory'
 ], function(
 	ButtonView,
 	ButtonModel,
-	ButtonController
+	ButtonController,
+	resizeFactory
 ) {
 	return {
 		getInstance: function(options) {
@@ -20,7 +22,10 @@ define('components/button/factories/main', [
 				models: {
 					config: configModel
 				},
-				parentComponent: options.parentComponent
+				parentComponent: options.parentComponent,
+				features: {
+					resize: resizeFactory.getInstance(options.el, options.settings.resizable)
+				}
 			});
 		},
 

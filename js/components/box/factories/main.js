@@ -1,11 +1,13 @@
 define('components/box/factories/main', [
 	'components/box/views/main',
 	'components/box/models/main',
-	'components/box/controllers/main'
+	'components/box/controllers/main',
+	'features/resize/factory'
 ], function(
 	BoxView,
 	BoxModel,
-	BoxController
+	BoxController,
+	resizeFactory
 ) {
 	return {
 		getInstance: function(options) {
@@ -20,7 +22,10 @@ define('components/box/factories/main', [
 				models: {
 					config: configModel
 				},
-				parentComponent: options.parentComponent
+				parentComponent: options.parentComponent,
+				features: {
+					resize: resizeFactory.getInstance(options.el, options.settings.resizable)
+				}
 			});
 		},
 

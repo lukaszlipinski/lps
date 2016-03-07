@@ -33,6 +33,10 @@ define('components/box/controllers/main', [
 		'aria-hidden': {
 			type: 'boolean',
 			defaultValue: false
+		},
+		'data-resizable': {
+			type: 'string',
+			defaultValue: 'both' //'horizontally', 'vertically', 'both', 'none'
 		}
 	};
 
