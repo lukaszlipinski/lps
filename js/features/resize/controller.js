@@ -8,11 +8,10 @@ define('features/resize/controller', [
 			BaseController.prototype.initialize.apply(this, arguments);
 
 			this.initializeEventListeners();
-			this.view.renderSquares(this.getSides().both);
 		},
 
 		initializeEventListeners: function() {
-			this.view.on('el:dblclick', this.onDblClick.bind(this));
+
 		},
 
 		getType: function() {
@@ -22,16 +21,54 @@ define('features/resize/controller', [
 		getSides: function() {
 			return {
 				both: ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'],
-				horizontally: [],
-				vertically: []
+				horizontally: ['w', 'e'],
+				vertically: ['n', 's']
 			};
 		},
 
-		onDblClick: function() {
-			var sides = this.getSides();
-			var type = this.getType();
-
-			this.view.render(sides[type]);
+		getPosition: function(side, elRect, squareRect) {
+			switch(side) {
+				case 'n':
+					return {
+						top: -squareRect.height / 2,
+						left: elRect.width / 2 - squareRect.width / 2
+					};
+				case 'nw':
+					return {
+						top: -squareRect.height / 2,
+						left: elRect.width - squareRect.width / 2
+					};
+				case 'w':
+					return {
+						top: elRect.height / 2 - squareRect.height / 2,
+						left: elRect.width - squareRect.width / 2
+					};
+				case 'sw':
+					return {
+						top: elRect.height - squareRect.height / 2,
+						left: elRect.width - squareRect.width / 2
+					};
+				case 's':
+					return {
+						top: elRect.height - squareRect.height / 2,
+						left:elRect.width / 2 - squareRect.width / 2
+					};
+				case 'se':
+					return {
+						top: elRect.height - squareRect.height / 2,
+						left: -squareRect.width / 2
+					};
+				case 'e':
+					return {
+						top: elRect.height / 2 - squareRect.height / 2,
+						left: -squareRect.width / 2
+					};
+				case 'ne':
+					return {
+						top: -squareRect.height / 2,
+						left: -squareRect.width / 2
+					};
+			}
 		},
 
 		destroy: function() {

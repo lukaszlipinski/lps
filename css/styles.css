@@ -35,16 +35,22 @@ body {
 	margin:-1px 0 0 -1px;
 }
 
+.arena [aria-selected="true"].resizing-mode {
+	border-color: #00ffff;
+}
 
 .widget-feature.resize {
+	z-index: 9;
 	position: absolute;
 }
 
 .widget-feature.resize .square {
-	width:10px;
-	height:10px;
+	width:6px;
+	height:6px;
 	border:1px solid #00ffff;
 	position: absolute;
+	z-index: 10;
+	background-color: white;
 }
 
 .widget-feature.resize .square.direction_n {

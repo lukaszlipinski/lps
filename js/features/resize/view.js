@@ -5,18 +5,23 @@ define('features/resize/view', [
 	BaseView,
 	$
 ) {
+	var eventScopeName = 'resize';
 
 	return BaseView.extend({
 		$container: null,
 		squares: {},
 
-		initialize: function() {
+		initialize: function(options) {
 			BaseView.prototype.initialize.apply(this, arguments);
 
+			this.controller = options.controller;
+
+			this.renderSquares();
 			this.initializeEventListeners();
 		},
 
-		renderSquares: function(sides) {
+		renderSquares: function() {
+			var sides = this.controller.getSides().both;
 			var $body = $('body');
 
 			if (!$body.find('#widget_resize').length) {
@@ -38,7 +43,38 @@ define('features/resize/view', [
 		},
 
 		initializeEventListeners: function() {
+			var $document = $(document);
+			var view = this;
+
+			$document.on('mousedown', '[data-component]', function() {
+				view.hideAllSquares();
+			});
+
 			this.$el.on('dblclick', this.onDblClick.bind(this));
+
+			this.$container.on('mousedown.' + eventScopeName, '[data-square]', function(e) {
+				var startX = e.pageX,
+					startY = e.pageY;
+
+				var $square = $(e.currentTarget);
+				var type = $square.attr('data-square');
+
+				$document.on('mousemove.' + eventScopeName, function(e) {
+					var currentX = e.pageX,
+						currentY = e.pageY;
+
+					e.preventDefault();
+
+					//currentY - startY
+
+
+				});
+
+				$document.on('mouseup.' + eventScopeName, function(e) {
+					$document.off('mousemove.' + eventScopeName);
+					$document.off('mouseup.' + eventScopeName);
+				});
+			})
 		},
 
 		render: function(sides) {
@@ -47,19 +83,25 @@ define('features/resize/view', [
 		},
 
 		showSquares: function(sides) {
-			//var rect = this.el.
+			var elRect = this.el.getBoundingClientRect();
+
+			this.$container.show();
+			this.$el.addClass('resizing-mode');
+			this.$container.css({
+				top: elRect.top,
+				left: elRect.left
+			});
 
 			for (var i = 0; i < sides.length; i++) {
 				var side = sides[i];
+				var $square = this.squares[side];
 
-				this.squares[side].css(this.getPosition(side)).show();
-			}
-		},
-
-		getPosition: function(side) {
-			return {
-				left: 0,
-				top:0
+				$square.show();
+				$square.css(this.controller.getPosition(
+					side,
+					elRect,
+					$square[0].getBoundingClientRect()
+				));
 			}
 		},
 
@@ -71,10 +113,15 @@ define('features/resize/view', [
 					squares[side].hide();
 				}
 			}
+
+			this.$el.removeClass('resizing-mode');
 		},
 
 		onDblClick: function() {
-			this.trigger('el:dblclick', {});
+			var sides = this.controller.getSides();
+			var type = this.controller.getType();
+
+			this.render(sides[type]);
 		},
 
 		destroy: function() {

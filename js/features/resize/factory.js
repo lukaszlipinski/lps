@@ -11,15 +11,7 @@ define('features/resize/factory', [
 ) {
 	return {
 		getInstance: function(el, propertyValue) {
-			var view = new View({
-				el: el,
-				templates: {
-					squares: squaresTemplate
-				}
-			});
-
 			var controller = new Controller({
-				view: view,
 				models: {
 					config: new Model({
 						resizable: propertyValue
@@ -27,7 +19,13 @@ define('features/resize/factory', [
 				}
 			});
 
-			view.controller = controller;
+			var view = new View({
+				el: el,
+				controller: controller,
+				templates: {
+					squares: squaresTemplate
+				}
+			});
 
 			return controller;
 		}
