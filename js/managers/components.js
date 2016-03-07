@@ -79,13 +79,6 @@ define('managers/components', [
 				}
 			}
 
-			var rect = $el[0].getBoundingClientRect();
-
-			settings.left = rect.left;
-			settings.top = rect.top;
-			settings.width = rect.width;
-			settings.height = rect.height;
-
 			return settings;
 		},
 

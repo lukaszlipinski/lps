@@ -91,8 +91,7 @@ define('features/drag_drop/view', [
 							currentLeft = Math.max(0, Math.min(parentComponentRect.width - componentRect.width, currentLeft));
 						}
 
-						view.moveElement(selectedComponent.getElement(), currentLeft, currentTop);
-						selectedComponent.setPosition(selectedComponent.getRect(), true);
+						selectedComponent.setPosition(currentLeft, currentTop);
 					}
 
 					var isOverDroppable = view.controller.isOverDroppableItem(

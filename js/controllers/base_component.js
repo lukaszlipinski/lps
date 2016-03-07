@@ -74,12 +74,8 @@ define('controllers/base_component', [
 			return this.getModel('config').isLocked();
 		},
 
-		setPosition: function(rect, silent) {
-			this.getModel('config').setPosition(rect.left, rect.top);
-
-			if (!silent) {
-				this.view.setPosition(rect.left, rect.top);
-			}
+		setPosition: function(x, y) {
+			this.view.setPosition(x, y);
 		},
 
 		getRect: function() {
@@ -116,7 +112,7 @@ define('controllers/base_component', [
 				itemRect.left = itemRect.left - rect.left;
 
 				item.setParentComponent(_self);
-				item.setPosition(itemRect, false);
+				item.setPosition(itemRect.left, itemRect.top);
 
 				view.appendElement($itemEl);
 			});

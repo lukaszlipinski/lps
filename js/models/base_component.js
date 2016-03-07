@@ -38,29 +38,6 @@ define('models/base_component', [
 			this.set('selected', !this.isSelected());
 		},
 
-		getWidth: function() {
-			return this.get('width');
-		},
-
-		getHeight: function() {
-			return this.get('height');
-		},
-
-		getTop: function() {
-			return this.get('top');
-		},
-
-		getLeft: function() {
-			return this.get('left');
-		},
-
-		getPosition: function() {
-			return {
-				x: this.getLeft(),
-				y: this.getTop()
-			}
-		},
-
 		isDroppable: function() {
 			return this.get('dropeffect') && this.get('dropeffect') !== 'none';
 		},
@@ -83,15 +60,6 @@ define('models/base_component', [
 
 		isVisible: function() {
 			return this.get('visible') === true;
-		},
-
-		setPosition: function(x, y) {
-			this.set({
-				left: x,
-				top: y
-			}, {
-				silent: true
-			});
 		},
 
 		onVisibilityChange: function(obj, callback) {
