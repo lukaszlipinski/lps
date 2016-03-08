@@ -23,6 +23,34 @@ define('features/drag_drop/view', [
 			var $document = $(document);
 			var CM = window.CM;
 
+			$document.on('keyup', function(e) {
+				console.log(e);
+				var components = CM.getSelectedComponents();
+				var ctrlKey = e.ctrlKey || e.metaKey;
+				var shiftKey = e.shiftKey;
+				var isLeftKey = e.keyCode === 37;
+				var isUpKey = e.keyCode === 38;
+				var isRightKey = e.keyCode === 39;
+				var isDownKey = e.keyCode === 40;
+
+				e.preventDefault();
+
+				for (var i = 0; i < components.length; i++) {
+					var component = components[i];
+					var x = 0, y = 0;
+
+					if (isRightKey || isLeftKey) {
+						x = (isRightKey ? 1 : -1) * (ctrlKey ? 5 : (shiftKey ? 10 : 1));
+					}
+
+					if (isUpKey || isDownKey) {
+						y = (isDownKey ? 1 : -1) * (ctrlKey ? 5 : (shiftKey ? 10 : 1));
+					}
+
+					component.moveBy(x, y);
+				}
+			});
+
 			$document.on('mousedown.' + eventScopeName, '[draggable="true"], [data-component="arena"]', function(e) {
 				var isCtrlPressed = e.ctrlKey || e.metaKey;
 

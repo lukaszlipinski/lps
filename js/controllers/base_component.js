@@ -86,6 +86,15 @@ define('controllers/base_component', [
 			this.view.setPosition(x, y);
 		},
 
+		moveBy: function(x, y) {
+			var rect = this.getRect();
+			var parentRect = this.getParentComponent().getRect();
+			var top = rect.top - parentRect.top;
+			var left = rect.left - parentRect.left;
+
+			this.setPosition(left + x, top + y);
+		},
+
 		resize: function(styles) {
 			this.view.resize(styles);
 		},

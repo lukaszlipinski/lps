@@ -135,9 +135,6 @@ define('features/resize/controller', [
 				}
 			}
 
-
-
-
 			return styles[options.side];
 		},
 
