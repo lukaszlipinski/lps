@@ -53,36 +53,24 @@ body {
 	background-color: white;
 }
 
-.widget-feature.resize .square.direction_n {
-
-}
-
-.widget-feature.resize .square.direction_nw {
-
-}
-
-.widget-feature.resize .square.direction_w {
-
-}
-
-.widget-feature.resize .square.direction_sw {
-
-}
-
+.widget-feature.resize .square.direction_n,
 .widget-feature.resize .square.direction_s {
-
+	cursor: ns-resize;
 }
 
+.widget-feature.resize .square.direction_nw,
 .widget-feature.resize .square.direction_se {
-
+	cursor:nesw-resize;
 }
 
+.widget-feature.resize .square.direction_w,
 .widget-feature.resize .square.direction_e {
-
+	cursor:ew-resize;
 }
 
+.widget-feature.resize .square.direction_sw,
 .widget-feature.resize .square.direction_ne {
-
+	cursor: nwse-resize;
 }
 
 .widget-feature .size-indicator {

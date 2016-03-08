@@ -1,6 +1,6 @@
 <div id="widget_resize" class="widget-feature resize"><%
     for(var i = 0; i < sides.length; i++) { %>
-        <div class="square <%= sides[i] %>" data-square="<%= sides[i] %>"></div>
+        <div class="square direction_<%= sides[i] %>" data-square="<%= sides[i] %>"></div>
     <% } %>
     <div class="size-indicator">0 x 0</div>
 </div>
