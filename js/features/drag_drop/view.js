@@ -127,7 +127,9 @@ define('features/drag_drop/view', [
 					);
 
 					if (isOverDroppable) {
+						var dropPointComponent = view.controller.getElementFromPoint(currentX, currentY);
 
+						//dropPointComponent.showDropIndicator();
 					}
 				});
 

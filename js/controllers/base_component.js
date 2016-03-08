@@ -115,6 +115,10 @@ define('controllers/base_component', [
 			this.getModel('config').hide();
 		},
 
+		showDropIndicator: function() {
+
+		},
+
 		appendComponents: function(x, y, components) {
 			var _self = this;
 			var view = this.view;
