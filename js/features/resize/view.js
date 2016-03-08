@@ -9,6 +9,7 @@ define('features/resize/view', [
 
 	return BaseView.extend({
 		$container: null,
+		selectedComponent : null,
 		squares: {},
 
 		initialize: function(options) {
@@ -16,11 +17,11 @@ define('features/resize/view', [
 
 			this.controller = options.controller;
 
-			this.renderSquares();
+			this.initializeSquares();
 			this.initializeEventListeners();
 		},
 
-		renderSquares: function() {
+		initializeSquares: function() {
 			var sides = this.controller.getSides().both;
 			var $body = $('body');
 
@@ -45,19 +46,24 @@ define('features/resize/view', [
 		initializeEventListeners: function() {
 			var $document = $(document);
 			var view = this;
+			var controller = view.controller;
 
 			$document.on('mousedown', '[data-component]', function() {
 				view.hideAllSquares();
 			});
 
-			this.$el.on('dblclick', this.onDblClick.bind(this));
+			this.$el.on('dblclick', '[data-component]', function(e) {
+				view.renderSquares(CM.getComponent(e.currentTarget));
+			});
 
 			this.$container.on('mousedown.' + eventScopeName, '[data-square]', function(e) {
 				var startX = e.pageX,
 					startY = e.pageY;
 
 				var $square = $(e.currentTarget);
-				var type = $square.attr('data-square');
+				var side = $square.attr('data-square');
+				var elRect = view.selectedComponent.getRect();
+				var elParentRect = view.selectedComponent.getParentComponent().getRect();
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					var currentX = e.pageX,
@@ -65,9 +71,17 @@ define('features/resize/view', [
 
 					e.preventDefault();
 
-					//currentY - startY
+					view.selectedComponent.resize(controller.getResizeValues({
+						elRect: elRect,
+						elParentRect: elParentRect,
+						startX: startX,
+						startY: startY,
+						side: side,
+						currentX: currentX,
+						currentY: currentY
+					}));
 
-
+					view.renderSquares(view.selectedComponent);
 				});
 
 				$document.on('mouseup.' + eventScopeName, function(e) {
@@ -77,16 +91,23 @@ define('features/resize/view', [
 			})
 		},
 
-		render: function(sides) {
+		renderSquares: function(component) {
+			var sides = this.controller.getSides();
+			var type = this.controller.getType();
+
+			this.selectedComponent = component;
+
 			this.hideAllSquares();
-			this.showSquares(sides);
+			this.showSquares(sides[type]);
 		},
 
 		showSquares: function(sides) {
-			var elRect = this.el.getBoundingClientRect();
+			var $el = this.selectedComponent.getElement();
+			var elRect = this.selectedComponent.getRect();
+
+			$el.addClass('resizing-mode');
 
 			this.$container.show();
-			this.$el.addClass('resizing-mode');
 			this.$container.css({
 				top: elRect.top,
 				left: elRect.left
@@ -115,13 +136,6 @@ define('features/resize/view', [
 			}
 
 			this.$el.removeClass('resizing-mode');
-		},
-
-		onDblClick: function() {
-			var sides = this.controller.getSides();
-			var type = this.controller.getType();
-
-			this.render(sides[type]);
 		},
 
 		destroy: function() {

@@ -26,7 +26,8 @@ define('components/arena/factories/main', [
 					config: configModel
 				},
 				features: {
-					dragdrop: dragDropFactory.getInstance(options.el)
+					dragdrop: dragDropFactory.getInstance(options.el),
+					resize: resizeFactory.getInstance(options.el)
 				}
 			});
 

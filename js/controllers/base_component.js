@@ -46,6 +46,14 @@ define('controllers/base_component', [
 			return this.getModel('config').getType();
 		},
 
+		getResizable: function() {
+			return this.getModel('config').getResizable();
+		},
+
+		isResizable: function() {
+			return this.getResizable() !== 'none';
+		},
+
 		isSelected: function() {
 			return this.getModel('config').isSelected();
 		},
@@ -76,6 +84,10 @@ define('controllers/base_component', [
 
 		setPosition: function(x, y) {
 			this.view.setPosition(x, y);
+		},
+
+		resize: function(styles) {
+			this.view.resize(styles);
 		},
 
 		getRect: function() {

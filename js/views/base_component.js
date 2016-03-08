@@ -26,6 +26,10 @@ define('views/base_component', [
 			});
 		},
 
+		resize: function(styles) {
+			this.$el.css(styles);
+		},
+
 		setZIndex: function(value) {
 			this.$el.css('zIndex', value);
 		},

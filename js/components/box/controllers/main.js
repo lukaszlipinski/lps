@@ -36,7 +36,7 @@ define('components/box/controllers/main', [
 		},
 		'data-resizable': {
 			type: 'string',
-			defaultValue: 'both' //'horizontally', 'vertically', 'both', 'none'
+			defaultValue: 'both' //'horizontally', 'vertically', 'both', 'diagonal' , 'none'
 		}
 	};
 

@@ -1,7 +1,9 @@
 define('features/resize/controller', [
-	'controllers/base'
+	'controllers/base',
+	'jquery'
 ], function(
-	BaseController
+	BaseController,
+	$
 ) {
 	return BaseController.extend({
 		initialize: function() {
@@ -69,6 +71,39 @@ define('features/resize/controller', [
 						left: -squareRect.width / 2
 					};
 			}
+		},
+
+		getResizeValues: function(options) {
+			var elRect = options.elRect;
+			var elParentRect = options.elParentRect;
+			var sX = options.startX;
+			var sY = options.startY;
+			var cX = options.currentX;
+			var cY = options.currentY;
+
+			var operations = {
+				n: {
+					top: elRect.top + (cY - sY) - elParentRect.top - 2,
+					height: elRect.height - (cY - sY)
+				},
+				w: {
+					width: elRect.width + (cX - sX)
+				},
+				s: {
+					height: elRect.height + (cY - sY)
+				},
+				e: {
+					left: elRect.left + (cX - sX) - elParentRect.left - 2,
+					width: elRect.width - (cX - sX)
+				}
+			};
+
+			operations.nw = $.extend({}, operations.n, operations.w);
+			operations.sw = $.extend({}, operations.s, operations.w);
+			operations.se = $.extend({}, operations.s, operations.e);
+			operations.ne = $.extend({}, operations.n, operations.e);
+
+			return operations[options.side];
 		},
 
 		destroy: function() {
