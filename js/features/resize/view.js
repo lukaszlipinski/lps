@@ -9,6 +9,8 @@ define('features/resize/view', [
 
 	return BaseView.extend({
 		$container: null,
+		$currentSizeIndicator: null,
+
 		selectedComponent : null,
 		squares: {},
 
@@ -34,6 +36,7 @@ define('features/resize/view', [
 			}
 
 			this.$container = $body.find('#widget_resize');
+			this.$currentSizeIndicator = this.$container.find('.size-indicator');
 
 			for (var i = 0; i < sides.length; i++) {
 				var side = sides[i];
@@ -41,6 +44,7 @@ define('features/resize/view', [
 			}
 
 			this.$container.hide();
+			this.$currentSizeIndicator.hide();
 		},
 
 		initializeEventListeners: function() {
@@ -83,11 +87,14 @@ define('features/resize/view', [
 					}));
 
 					view.renderSquares(view.selectedComponent);
+					view.renderCurrentSizeIndicator();
 				});
 
 				$document.on('mouseup.' + eventScopeName, function(e) {
 					$document.off('mousemove.' + eventScopeName);
 					$document.off('mouseup.' + eventScopeName);
+
+					view.$currentSizeIndicator.hide();
 				});
 			})
 		},
@@ -101,6 +108,13 @@ define('features/resize/view', [
 			this.hideAllSquares();
 			this.showSquares(sides[resizableType]);
 		},
+
+		renderCurrentSizeIndicator: function(resize) {
+			var rect = this.selectedComponent.getRect();
+
+			this.$currentSizeIndicator.html(rect.width + 'x' + rect.height).show();
+		},
+
 
 		showSquares: function(sides) {
 			var $el = this.selectedComponent.getElement();

@@ -84,3 +84,11 @@ body {
 .widget-feature.resize .square.direction_ne {
 
 }
+
+.widget-feature .size-indicator {
+	padding: 3px;
+	font-size: 11px;
+	background-color: black;
+	color:white;
+	font-family: Verdana;
+}
