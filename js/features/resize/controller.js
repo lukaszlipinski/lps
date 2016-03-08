@@ -100,13 +100,24 @@ define('features/resize/controller', [
 			operations.se = $.extend({}, operations.s, operations.e);
 			operations.ne = $.extend({}, operations.n, operations.e);
 
-
 			if (resizableType === 'centered-vertically') {
-
+				operations.n = {
+					height: elRect.height - diffY * 2,
+					top: elRect.top + diffY - elParentRect.top - 2
+				};
+				operations.s = {
+					height: elRect.height + diffY * 2,
+					top: elRect.top - diffY - elParentRect.top - 2
+				};
 			} else if (resizableType === 'centered-horizontally') {
-
-			} else {
-
+				operations.w = {
+					width: elRect.width + diffX * 2,
+					left: elRect.left - diffX - elParentRect.left - 2
+				};
+				operations.e = {
+					width: elRect.width - diffX * 2,
+					left: elRect.left + diffX - elParentRect.left - 2
+				};
 			}
 
 			return operations[options.side];
