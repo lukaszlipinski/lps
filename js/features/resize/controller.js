@@ -80,15 +80,6 @@ define('features/resize/controller', [
 			var elParentRect = options.elParentRect;
 			var diffX = options.diffX;
 			var diffY = options.diffY;
-			var ratioX = 1;
-			var ratioY = 1;
-
-			//Keep proportions
-			if (shiftKey) {
-				//if width and height are being resized at the same time
-				ratioX = elStartRect.width / elStartRect.height;
-				ratioY = elStartRect.height / elStartRect.width;
-			}
 
 			var styles = {
 				n: {
@@ -111,6 +102,17 @@ define('features/resize/controller', [
 			styles.sw = $.extend({}, styles.s, styles.w);
 			styles.se = $.extend({}, styles.s, styles.e);
 			styles.ne = $.extend({}, styles.n, styles.e);
+
+			//Keep proportions
+			/*if (shiftKey) {
+				var ratio = elStartRect.height / elStartRect.width;
+
+				styles.se = {
+					height: elStartRect.height + diffY * ratio,
+					left: elStartRect.left + diffX - elParentRect.left - 2,
+					width: elStartRect.width - diffX * ratio
+				};
+			}*/
 
 			if (resizableType === 'centered-vertically') {
 				styles.n = {
