@@ -66,6 +66,22 @@ define('models/base_component', [
 			return this.get('visible') === true;
 		},
 
+		getMinWidth: function() {
+			return this.get('minwidth');
+		},
+
+		getMaxWidth: function() {
+			return this.get('maxwidth');
+		},
+
+		getMinHeight: function() {
+			return this.get('minheight');
+		},
+
+		getMaxHeight: function() {
+			return this.get('maxheight');
+		},
+
 		onVisibilityChange: function(obj, callback) {
 			obj.listenTo(this, 'change:visible', callback);
 		},

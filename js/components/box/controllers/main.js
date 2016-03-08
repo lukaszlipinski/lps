@@ -37,6 +37,22 @@ define('components/box/controllers/main', [
 		'data-resizable': {
 			type: 'string',
 			defaultValue: 'fully'
+		},
+		'data-minwidth': {
+			type: 'number',
+			defaultValue: 10
+		},
+		'data-maxwidth': {
+			type: 'number',
+			defaultValue: Infinity
+		},
+		'data-minheight': {
+			type: 'number',
+			defaultValue: 10
+		},
+		'data-maxheight': {
+			type: 'number',
+			defaultValue: Infinity
 		}
 	};
 

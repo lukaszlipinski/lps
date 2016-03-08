@@ -89,7 +89,7 @@ define('managers/components', [
 				case 'boolean':
 					return value === 'true';
 				case 'number':
-					return parseInt(value, 10);
+					return (value === Infinity || value === -Infinity) ? value : parseInt(value, 10);
 				default:
 					return value;
 			}

@@ -73,54 +73,72 @@ define('features/resize/controller', [
 		},
 
 		getResizeValues: function(options) {
-			var elRect = options.elRect;
-			var resizableType = options.resizableType;
+			var selectedComponent = options.selectedComponent;
+			var elStartRect = options.elRect;
+			var resizableType = selectedComponent.getResizableType();
 			var elParentRect = options.elParentRect;
 			var diffX = options.diffX;
 			var diffY = options.diffY;
-			var operations = {
+			var styles = {
 				n: {
-					top: elRect.top + diffY - elParentRect.top - 2,
-					height: elRect.height - diffY
+					top: elStartRect.top + diffY - elParentRect.top - 2,
+					height: elStartRect.height - diffY
 				},
 				w: {
-					width: elRect.width + diffX
+					width: elStartRect.width + diffX
 				},
 				s: {
-					height: elRect.height + diffY
+					height: elStartRect.height + diffY
 				},
 				e: {
-					left: elRect.left + diffX - elParentRect.left - 2,
-					width: elRect.width - diffX
+					left: elStartRect.left + diffX - elParentRect.left - 2,
+					width: elStartRect.width - diffX
 				}
 			};
 
-			operations.nw = $.extend({}, operations.n, operations.w);
-			operations.sw = $.extend({}, operations.s, operations.w);
-			operations.se = $.extend({}, operations.s, operations.e);
-			operations.ne = $.extend({}, operations.n, operations.e);
+			styles.nw = $.extend({}, styles.n, styles.w);
+			styles.sw = $.extend({}, styles.s, styles.w);
+			styles.se = $.extend({}, styles.s, styles.e);
+			styles.ne = $.extend({}, styles.n, styles.e);
 
 			if (resizableType === 'centered-vertically') {
-				operations.n = {
-					height: elRect.height - diffY * 2,
-					top: elRect.top + diffY - elParentRect.top - 2
+				styles.n = {
+					height: elStartRect.height - diffY * 2,
+					top: elStartRect.top + diffY - elParentRect.top - 2
 				};
-				operations.s = {
-					height: elRect.height + diffY * 2,
-					top: elRect.top - diffY - elParentRect.top - 2
+				styles.s = {
+					height: elStartRect.height + diffY * 2,
+					top: elStartRect.top - diffY - elParentRect.top - 2
 				};
 			} else if (resizableType === 'centered-horizontally') {
-				operations.w = {
-					width: elRect.width + diffX * 2,
-					left: elRect.left - diffX - elParentRect.left - 2
+				styles.w = {
+					width: elStartRect.width + diffX * 2,
+					left: elStartRect.left - diffX - elParentRect.left - 2
 				};
-				operations.e = {
-					width: elRect.width - diffX * 2,
-					left: elRect.left + diffX - elParentRect.left - 2
+				styles.e = {
+					width: elStartRect.width - diffX * 2,
+					left: elStartRect.left + diffX - elParentRect.left - 2
 				};
 			}
 
-			return operations[options.side];
+			//Apply limits
+			for(var side in styles) {
+				if (styles.hasOwnProperty(side)) {
+					if (styles[side].width) {
+						styles[side].width =
+							Math.min(Math.max(styles[side].width, selectedComponent.getMinWidth()), selectedComponent.getMaxWidth());
+					}
+
+					if (styles[side].height) {
+						styles[side].height = Math.min(Math.max(styles[side].height, selectedComponent.getMinHeight()), selectedComponent.getMaxHeight());
+					}
+				}
+			}
+
+
+
+
+			return styles[options.side];
 		},
 
 		destroy: function() {

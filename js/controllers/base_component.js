@@ -130,6 +130,22 @@ define('controllers/base_component', [
 			});
 		},
 
+		getMinWidth: function() {
+			return this.getModel('config').getMinWidth();
+		},
+
+		getMaxWidth: function() {
+			return this.getModel('config').getMaxWidth();
+		},
+
+		getMinHeight: function() {
+			return this.getModel('config').getMinHeight();
+		},
+
+		getMaxHeight: function() {
+			return this.getModel('config').getMaxHeight();
+		},
+
 		onVisibilityChange: function() {
 			var isVisible = this.getModel('config').isVisible();
 

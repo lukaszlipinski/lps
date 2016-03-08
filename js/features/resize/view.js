@@ -64,7 +64,7 @@ define('features/resize/view', [
 
 				var $square = $(e.currentTarget);
 				var side = $square.attr('data-square');
-				var elRect = view.selectedComponent.getRect();
+				var elStartRect = view.selectedComponent.getRect();
 				var elParentRect = view.selectedComponent.getParentComponent().getRect();
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
@@ -74,8 +74,8 @@ define('features/resize/view', [
 					e.preventDefault();
 
 					view.selectedComponent.resize(controller.getResizeValues({
-						resizableType: view.selectedComponent.getResizableType(),
-						elRect: elRect,
+						selectedComponent: view.selectedComponent,
+						elRect: elStartRect,
 						elParentRect: elParentRect,
 						diffX: currentX - startX,
 						diffY: currentY - startY,
