@@ -24,7 +24,6 @@ define('features/drag_drop/view', [
 			var CM = window.CM;
 
 			$document.on('keyup', function(e) {
-				console.log(e);
 				var components = CM.getSelectedComponents();
 				var ctrlKey = e.ctrlKey || e.metaKey;
 				var shiftKey = e.shiftKey;
