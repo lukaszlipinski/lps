@@ -125,12 +125,25 @@ define('features/resize/controller', [
 			for(var side in styles) {
 				if (styles.hasOwnProperty(side)) {
 					if (styles[side].width) {
-						styles[side].width =
-							Math.min(Math.max(styles[side].width, selectedComponent.getMinWidth()), selectedComponent.getMaxWidth());
+						styles[side].width = Math.min(Math.max(styles[side].width, selectedComponent.getMinWidth()), selectedComponent.getMaxWidth());
 					}
 
 					if (styles[side].height) {
 						styles[side].height = Math.min(Math.max(styles[side].height, selectedComponent.getMinHeight()), selectedComponent.getMaxHeight());
+					}
+
+					//Element will not move when max/min width is reached
+					if (styles[side].left) {
+						if (styles[side].width && styles[side].width === selectedComponent.getMinWidth() || styles[side].width === selectedComponent.getMaxWidth()) {
+							styles[side].left = elStartRect.left + (elStartRect.width - styles[side].width) - elParentRect.left - 2;
+						}
+					}
+
+					//Element will not move when max/min height is reached
+					if (styles[side].top) {
+						if (styles[side].height && styles[side].height === selectedComponent.getMinHeight() || styles[side].height === selectedComponent.getMaxHeight()) {
+							styles[side].top = elStartRect.top + (elStartRect.height - styles[side].height) - elParentRect.top - 2;
+						}
 					}
 				}
 			}

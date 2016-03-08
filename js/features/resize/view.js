@@ -115,7 +115,6 @@ define('features/resize/view', [
 			this.$currentSizeIndicator.html(rect.width + 'x' + rect.height).show();
 		},
 
-
 		showSquares: function(sides) {
 			var $el = this.selectedComponent.getElement();
 			var elRect = this.selectedComponent.getRect();
