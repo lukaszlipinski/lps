@@ -22,7 +22,7 @@ define('features/resize/view', [
 		},
 
 		initializeSquares: function() {
-			var sides = this.controller.getSides().both;
+			var sides = this.controller.getSides().fully;
 			var $body = $('body');
 
 			if (!$body.find('#widget_resize').length) {
@@ -74,13 +74,12 @@ define('features/resize/view', [
 					e.preventDefault();
 
 					view.selectedComponent.resize(controller.getResizeValues({
+						resizableType: view.selectedComponent.getResizableType(),
 						elRect: elRect,
 						elParentRect: elParentRect,
-						startX: startX,
-						startY: startY,
-						side: side,
-						currentX: currentX,
-						currentY: currentY
+						diffX: currentX - startX,
+						diffY: currentY - startY,
+						side: side
 					}));
 
 					view.renderSquares(view.selectedComponent);
@@ -95,7 +94,7 @@ define('features/resize/view', [
 
 		renderSquares: function(component) {
 			var sides = this.controller.getSides();
-			var resizableType = component.getResizable();
+			var resizableType = component.getResizableType();
 
 			this.selectedComponent = component;
 

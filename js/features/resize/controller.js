@@ -18,10 +18,12 @@ define('features/resize/controller', [
 
 		getSides: function() {
 			return {
-				both: ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'],
-				horizontally: ['w', 'e'],
-				vertically: ['n', 's'],
-				diagonally: ['nw', 'sw', 'se', 'ne']
+				'fully': ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'],
+				'horizontally': ['w', 'e'],
+				'vertically': ['n', 's'],
+				'diagonally': ['nw', 'sw', 'se', 'ne'],
+				'centered-horizontally': ['w', 'e'],
+				'centered-vertically': ['n', 's']
 			};
 		},
 
@@ -72,26 +74,24 @@ define('features/resize/controller', [
 
 		getResizeValues: function(options) {
 			var elRect = options.elRect;
+			var resizableType = options.resizableType;
 			var elParentRect = options.elParentRect;
-			var sX = options.startX;
-			var sY = options.startY;
-			var cX = options.currentX;
-			var cY = options.currentY;
-
+			var diffX = options.diffX;
+			var diffY = options.diffY;
 			var operations = {
 				n: {
-					top: elRect.top + (cY - sY) - elParentRect.top - 2,
-					height: elRect.height - (cY - sY)
+					top: elRect.top + diffY - elParentRect.top - 2,
+					height: elRect.height - diffY
 				},
 				w: {
-					width: elRect.width + (cX - sX)
+					width: elRect.width + diffX
 				},
 				s: {
-					height: elRect.height + (cY - sY)
+					height: elRect.height + diffY
 				},
 				e: {
-					left: elRect.left + (cX - sX) - elParentRect.left - 2,
-					width: elRect.width - (cX - sX)
+					left: elRect.left + diffX - elParentRect.left - 2,
+					width: elRect.width - diffX
 				}
 			};
 
@@ -99,6 +99,15 @@ define('features/resize/controller', [
 			operations.sw = $.extend({}, operations.s, operations.w);
 			operations.se = $.extend({}, operations.s, operations.e);
 			operations.ne = $.extend({}, operations.n, operations.e);
+
+
+			if (resizableType === 'centered-vertically') {
+
+			} else if (resizableType === 'centered-horizontally') {
+
+			} else {
+
+			}
 
 			return operations[options.side];
 		},

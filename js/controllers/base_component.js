@@ -46,12 +46,12 @@ define('controllers/base_component', [
 			return this.getModel('config').getType();
 		},
 
-		getResizable: function() {
-			return this.getModel('config').getResizable();
+		getResizableType: function() {
+			return this.getModel('config').getResizableType();
 		},
 
 		isResizable: function() {
-			return this.getResizable() !== 'none';
+			return this.getResizableType() !== 'none';
 		},
 
 		isSelected: function() {
