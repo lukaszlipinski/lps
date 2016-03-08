@@ -106,7 +106,6 @@ define('features/resize/view', [
 
 			this.selectedComponent = component;
 
-			this.hideAllSquares();
 			this.showSquares(sides[resizableType]);
 		},
 
@@ -119,6 +118,8 @@ define('features/resize/view', [
 		showSquares: function(sides) {
 			var $el = this.selectedComponent.getElement();
 			var elRect = this.selectedComponent.getRect();
+
+			this.hideAllSquares();
 
 			$el.addClass('resizing-mode');
 
@@ -150,7 +151,12 @@ define('features/resize/view', [
 				}
 			}
 
-			this.$el.removeClass('resizing-mode');
+			if (this.selectedComponent) {
+				var $el = this.selectedComponent.getElement();
+
+				$el.removeClass('resizing-mode');
+			}
+
 		},
 
 		destroy: function() {
