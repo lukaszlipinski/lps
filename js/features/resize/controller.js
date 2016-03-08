@@ -16,15 +16,12 @@ define('features/resize/controller', [
 
 		},
 
-		getType: function() {
-			return this.getModel('config').getType();
-		},
-
 		getSides: function() {
 			return {
 				both: ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'],
 				horizontally: ['w', 'e'],
-				vertically: ['n', 's']
+				vertically: ['n', 's'],
+				diagonally: ['nw', 'sw', 'se', 'ne']
 			};
 		},
 

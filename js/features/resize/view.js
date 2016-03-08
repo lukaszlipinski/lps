@@ -48,11 +48,13 @@ define('features/resize/view', [
 			var view = this;
 			var controller = view.controller;
 
-			$document.on('mousedown', '[data-component]', function() {
+			$document.on('mousedown', '[data-component]', function(e) {
 				view.hideAllSquares();
 			});
 
 			this.$el.on('dblclick', '[data-component]', function(e) {
+				e.stopPropagation();
+
 				view.renderSquares(CM.getComponent(e.currentTarget));
 			});
 
@@ -93,12 +95,12 @@ define('features/resize/view', [
 
 		renderSquares: function(component) {
 			var sides = this.controller.getSides();
-			var type = this.controller.getType();
+			var resizableType = component.getResizable();
 
 			this.selectedComponent = component;
 
 			this.hideAllSquares();
-			this.showSquares(sides[type]);
+			this.showSquares(sides[resizableType]);
 		},
 
 		showSquares: function(sides) {
