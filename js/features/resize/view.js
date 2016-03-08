@@ -78,6 +78,7 @@ define('features/resize/view', [
 					e.preventDefault();
 
 					view.selectedComponent.resize(controller.getResizeValues({
+						shiftKey: e.shiftKey,
 						selectedComponent: view.selectedComponent,
 						elRect: elStartRect,
 						elParentRect: elParentRect,

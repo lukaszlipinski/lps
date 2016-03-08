@@ -73,12 +73,23 @@ define('features/resize/controller', [
 		},
 
 		getResizeValues: function(options) {
+			var shiftKey = options.shiftKey;
 			var selectedComponent = options.selectedComponent;
 			var elStartRect = options.elRect;
 			var resizableType = selectedComponent.getResizableType();
 			var elParentRect = options.elParentRect;
 			var diffX = options.diffX;
 			var diffY = options.diffY;
+			var ratioX = 1;
+			var ratioY = 1;
+
+			//Keep proportions
+			if (shiftKey) {
+				//if width and height are being resized at the same time
+				ratioX = elStartRect.width / elStartRect.height;
+				ratioY = elStartRect.height / elStartRect.width;
+			}
+
 			var styles = {
 				n: {
 					top: elStartRect.top + diffY - elParentRect.top - 2,
@@ -121,28 +132,35 @@ define('features/resize/controller', [
 				};
 			}
 
+			var minW = selectedComponent.getMinWidth();
+			var maxW = selectedComponent.getMaxWidth();
+			var minH = selectedComponent.getMinHeight();
+			var maxH = selectedComponent.getMaxHeight();
+
 			//Apply limits
 			for(var side in styles) {
 				if (styles.hasOwnProperty(side)) {
-					if (styles[side].width) {
-						styles[side].width = Math.min(Math.max(styles[side].width, selectedComponent.getMinWidth()), selectedComponent.getMaxWidth());
+					var style = styles[side];
+
+					if (style.width) {
+						style.width = Math.min(Math.max(style.width, minW), maxW);
 					}
 
-					if (styles[side].height) {
-						styles[side].height = Math.min(Math.max(styles[side].height, selectedComponent.getMinHeight()), selectedComponent.getMaxHeight());
+					if (style.height) {
+						style.height = Math.min(Math.max(style.height, minH), maxH);
 					}
 
 					//Element will not move when max/min width is reached
-					if (styles[side].left) {
-						if (styles[side].width && styles[side].width === selectedComponent.getMinWidth() || styles[side].width === selectedComponent.getMaxWidth()) {
-							styles[side].left = elStartRect.left + (elStartRect.width - styles[side].width) - elParentRect.left - 2;
+					if (style.left) {
+						if (style.width && style.width === minW || style.width === maxW) {
+							style.left = elStartRect.left + (elStartRect.width - style.width) - elParentRect.left - 2;
 						}
 					}
 
 					//Element will not move when max/min height is reached
-					if (styles[side].top) {
-						if (styles[side].height && styles[side].height === selectedComponent.getMinHeight() || styles[side].height === selectedComponent.getMaxHeight()) {
-							styles[side].top = elStartRect.top + (elStartRect.height - styles[side].height) - elParentRect.top - 2;
+					if (style.top) {
+						if (style.height && style.height === minH || style.height === maxH) {
+							style.top = elStartRect.top + (elStartRect.height - style.height) - elParentRect.top - 2;
 						}
 					}
 				}
