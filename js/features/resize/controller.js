@@ -80,6 +80,7 @@ define('features/resize/controller', [
 			var elParentRect = options.elParentRect;
 			var diffX = options.diffX;
 			var diffY = options.diffY;
+			var ratio = elStartRect.height / elStartRect.width;
 
 			var styles = {
 				n: {
@@ -104,15 +105,31 @@ define('features/resize/controller', [
 			styles.ne = $.extend({}, styles.n, styles.e);
 
 			//Keep proportions
-			/*if (shiftKey) {
-				var ratio = elStartRect.height / elStartRect.width;
+			if (shiftKey) {
+				styles.sw = {
+					width: elStartRect.width + diffX,
+					height: elStartRect.height + diffX * ratio
+				};
+
+				styles.nw = {
+					width: elStartRect.width + diffX,
+					height: elStartRect.height + diffX * ratio,
+					top: elStartRect.top - diffX * ratio - elParentRect.top - 2
+				};
 
 				styles.se = {
-					height: elStartRect.height + diffY * ratio,
-					left: elStartRect.left + diffX - elParentRect.left - 2,
-					width: elStartRect.width - diffX * ratio
+					width: elStartRect.width - diffX,
+					height: elStartRect.height - diffX * ratio,
+					left: elStartRect.left + diffX - elParentRect.left - 2
 				};
-			}*/
+
+				styles.ne = {
+					top: elStartRect.top + diffX * ratio - elParentRect.top - 2,
+					height: elStartRect.height - diffX * ratio,
+					left: elStartRect.left + diffX - elParentRect.left - 2,
+					width: elStartRect.width - diffX
+				};
+			}
 
 			if (resizableType === 'centered-vertically') {
 				styles.n = {
@@ -138,6 +155,11 @@ define('features/resize/controller', [
 			var maxW = selectedComponent.getMaxWidth();
 			var minH = selectedComponent.getMinHeight();
 			var maxH = selectedComponent.getMaxHeight();
+
+			if (shiftKey) {
+				minH = minH * ratio;
+				maxH = maxH * ratio;
+			}
 
 			//Apply limits
 			for(var side in styles) {
