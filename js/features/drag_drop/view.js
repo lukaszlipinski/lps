@@ -116,13 +116,9 @@ define('features/drag_drop/view', [
 
 					var hoveredElement = view.controller.getElementFromPoint(currentX, currentY);
 
-					if (hoveredElement.isDroppable()) {
-						//var dropPointComponent = view.controller.getElementFromPoint(currentX, currentY);
-
-						//dropPointComponent.showDropIndicator();
+					if (hoveredElement && hoveredElement.isDroppable()) {
+						hoveredElement.showDropIndicator();
 					}
-
-					console.log();
 				});
 
 				$document.on('mouseup.' + eventScopeName, function(e) {
@@ -136,7 +132,7 @@ define('features/drag_drop/view', [
 					if (moved) {
 						var hoveredElement = view.controller.getElementFromPoint(currentX, currentY);
 
-						if (hoveredElement.isDroppable()) {
+						if (hoveredElement && hoveredElement.isDroppable()) {
 							hoveredElement.appendComponents(currentX, currentY, CM.getSelectedComponents());
 						}
 					}

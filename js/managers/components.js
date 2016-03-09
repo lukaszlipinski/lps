@@ -40,7 +40,14 @@ define('managers/components', [
 			var id = el.getAttribute('data-component-id');
 
 			if (!id) {
-				id = $(el).parents('[data-component]')[0].getAttribute('data-component-id');
+				var $parents = $(el).parents('[data-component]');
+
+				//Element is not in area
+				if (!$parents.length) {
+					return null;
+				}
+
+				id = $parents[0].getAttribute('data-component-id');
 			}
 
 			return componentsRegister[id];

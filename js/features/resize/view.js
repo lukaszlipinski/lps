@@ -53,13 +53,14 @@ define('features/resize/view', [
 			var controller = view.controller;
 
 			$document.on('mousedown', '[data-component]', function(e) {
-				view.hideAllSquares();
-			});
+				var component = CM.getComponent(e.currentTarget);
 
-			this.$el.on('dblclick', '[data-component]', function(e) {
-				e.stopPropagation();
+				if (component.getType() === 'arena') {
+					view.hideAllSquares();
+					return;
+				}
 
-				view.renderSquares(CM.getComponent(e.currentTarget));
+				view.renderSquares(component);
 			});
 
 			this.$container.on('mousedown.' + eventScopeName, '[data-square]', function(e) {
@@ -112,7 +113,7 @@ define('features/resize/view', [
 		renderCurrentSizeIndicator: function(resize) {
 			var rect = this.selectedComponent.getRect();
 
-			this.$currentSizeIndicator.html(rect.width + 'x' + rect.height).show();
+			this.$currentSizeIndicator.html(parseInt(rect.width, 10) + 'x' + parseInt(rect.height, 10)).show();
 		},
 
 		showSquares: function(sides) {
@@ -156,7 +157,6 @@ define('features/resize/view', [
 
 				$el.removeClass('resizing-mode');
 			}
-
 		},
 
 		destroy: function() {
