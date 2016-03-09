@@ -23,11 +23,11 @@ body {
 	background-color: blue;
 }
 
-.arena [aria-selected="true"] {
+.arena [aria-selected="true"] .outer-editable {
 	border:1px solid black;
 	margin:-1px 0 0 -1px;
 }
 
-.arena [aria-selected="true"].resizing-mode {
+.arena [aria-selected="true"].resizing-mode .outer-editable {
 	border-color: #00ffff;
 }
