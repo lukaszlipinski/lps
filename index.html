@@ -4,12 +4,24 @@
         <meta charset="UTF-8">
         <title>LPS</title>
         <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="css/resize.css">
+        <link rel="stylesheet" type="text/css" href="css/button.css">
         <script src="js/libs/require-min.js"></script>
     </head>
     <body>
         <div data-component="arena" class="arena" aria-dropeffect="move">
-            <div data-component="button" class="button" data-resizable="centered-vertically" aria-disabled="false" aria-pressed="false" style="top:210px;left:323px;width:30px;height:30px;" draggable="true"></div>
-            <div data-component="button" class="button" data-resizable="horizontally" aria-disabled="false" aria-pressed="false" style="top:10px;left:240px;" draggable="true">
+            <div data-component="button" class="component-button" data-resizable="centered-vertically" aria-disabled="false" aria-pressed="false" style="top:210px;left:323px;width:250px;height:75px;" draggable="true">
+                <div class="outer-editable">
+                    <div class="editable">
+                        <a href=""></a>
+                        <button type="button" contenteditable="false">
+                            <div>Button</div>
+                        </button>
+                    </div>
+                    <div class="backdrop"></div>
+                </div>
+            </div>
+            <!--div data-component="button" class="button" data-resizable="horizontally" aria-disabled="false" aria-pressed="false" style="top:10px;left:240px;" draggable="true">
                 <div style="width:50px;height:50px;background-color:pink;"></div>
             </div>
 
@@ -21,7 +33,7 @@
                 <div data-component="box" data-resizable="diagonally" class="box box2" style="top:100px;left:100px;width:150px;height:100px;" draggable="true" data-locked="true">
                     <div data-component="button" aria-dropeffect="move" class="button" aria-disabled="false" aria-pressed="false" style="top:10px;left:10px;width:20px;height:20px;" draggable="true" data-locked="true"></div>
                 </div>
-            </div>
+            </div-->
         </div>
 
         <script type="application/javascript" src="js/bootstrap.js"></script>

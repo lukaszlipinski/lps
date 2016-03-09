@@ -1,7 +1,9 @@
 define('components/button/views/main', [
-	'views/base_component'
+	'views/base_component',
+	'text!templates/components/button/default.mtpl'
 ], function(
-	BaseComponentView
+	BaseComponentView,
+	template
 ) {
 	'use strict';
 
@@ -14,6 +16,10 @@ define('components/button/views/main', [
 
 		initializeEventListeners: function() {
 
+		},
+
+		initializeContent: function() {
+			
 		},
 
 		destroy : function() {

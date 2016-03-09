@@ -1,0 +1,42 @@
+
+.widget-feature.resize {
+	z-index: 9;
+	position: absolute;
+}
+
+.widget-feature.resize .square {
+	width:6px;
+	height:6px;
+	border:1px solid #00ffff;
+	position: absolute;
+	z-index: 10;
+	background-color: white;
+}
+
+.widget-feature.resize .square.direction_n,
+.widget-feature.resize .square.direction_s {
+	cursor: ns-resize;
+}
+
+.widget-feature.resize .square.direction_nw,
+.widget-feature.resize .square.direction_se {
+	cursor:nesw-resize;
+}
+
+.widget-feature.resize .square.direction_w,
+.widget-feature.resize .square.direction_e {
+	cursor:ew-resize;
+}
+
+.widget-feature.resize .square.direction_sw,
+.widget-feature.resize .square.direction_ne {
+	cursor: nwse-resize;
+}
+
+.widget-feature .size-indicator {
+	padding: 3px;
+	font-size: 11px;
+	background-color: black;
+	color:white;
+	font-family: Verdana;
+}

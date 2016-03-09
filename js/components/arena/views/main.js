@@ -18,6 +18,10 @@ define('components/arena/views/main', [
 
 		},
 
+		initializeContent: function() {
+			//do nothing
+		},
+
 		render: function() {
 
 		},

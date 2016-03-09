@@ -16,6 +16,10 @@ define('components/box/views/main', [
 
 		},
 
+		initializeContent: function() {
+			//box does not need to be changed
+		},
+
 		destroy : function() {
 			BaseComponentView.prototype.destroy.apply(this, arguments);
 		}

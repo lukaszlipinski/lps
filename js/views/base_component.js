@@ -6,9 +6,18 @@ define('views/base_component', [
 	'use strict';
 
 	return BaseView.extend({
+		originalInnerHTML: null,
+
 		initialize : function(options) {
 			BaseView.prototype.initialize.apply(this, arguments);
 
+			this.originalInnerHTML = this.$el.html();
+
+			this.initializeContent();
+		},
+
+		initializeContent: function() {
+			throw 'Please implement initializeContent for this component';
 		},
 
 		getRect: function() {

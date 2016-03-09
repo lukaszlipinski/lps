@@ -1,0 +1,9 @@
+<div class="outer-editable">
+    <div class="editable">
+        <a href=""></a>
+        <button type="button" contenteditable="false">
+            <div>Button</div>
+        </button>
+    </div>
+    <div class="backdrop"></div>
+</div>
