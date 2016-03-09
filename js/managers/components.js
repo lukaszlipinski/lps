@@ -39,6 +39,10 @@ define('managers/components', [
 		getComponent: function(el) {
 			var id = el.getAttribute('data-component-id');
 
+			if (!id) {
+				id = $(el).parents('[data-component]')[0].getAttribute('data-component-id');
+			}
+
 			return componentsRegister[id];
 		},
 		registerComponentInstance: function(el, parentComponent) {

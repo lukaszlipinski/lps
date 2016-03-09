@@ -85,13 +85,6 @@ define('features/drag_drop/view', [
 					startY = e.pageY;
 
 				var startPositions = view.controller.getRects(components);
-				var map = view.controller.getEmptyMap();
-
-				view.controller.generateMap(
-					map,
-					view.controller.getRootElement(),
-					components[0].getParentComponent()//selected items always have the same parent
-				);
 
 				$document.on('mousemove.' + eventScopeName, function(e) {
 					var selectedComponents = CM.getSelectedComponents();
@@ -121,16 +114,15 @@ define('features/drag_drop/view', [
 						selectedComponent.setPosition(currentLeft, currentTop);
 					}
 
-					var isOverDroppable = view.controller.isOverDroppableItem(
-						map,
-						currentX, currentY
-					);
+					var hoveredElement = view.controller.getElementFromPoint(currentX, currentY);
 
-					if (isOverDroppable) {
-						var dropPointComponent = view.controller.getElementFromPoint(currentX, currentY);
+					if (hoveredElement.isDroppable()) {
+						//var dropPointComponent = view.controller.getElementFromPoint(currentX, currentY);
 
 						//dropPointComponent.showDropIndicator();
 					}
+
+					console.log();
 				});
 
 				$document.on('mouseup.' + eventScopeName, function(e) {
@@ -142,14 +134,10 @@ define('features/drag_drop/view', [
 
 					//Dropping elements
 					if (moved) {
-						var isOverDroppable = view.controller.isOverDroppableItem(
-							map,
-							currentX, currentY
-						);
+						var hoveredElement = view.controller.getElementFromPoint(currentX, currentY);
 
-						if (isOverDroppable) {
-							var dropPointComponent = view.controller.getElementFromPoint(currentX, currentY);
-							dropPointComponent.appendComponents(currentX, currentY, CM.getSelectedComponents());
+						if (hoveredElement.isDroppable()) {
+							hoveredElement.appendComponents(currentX, currentY, CM.getSelectedComponents());
 						}
 					}
 
