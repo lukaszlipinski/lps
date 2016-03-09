@@ -32,6 +32,10 @@ define('features/drag_drop/view', [
 				var isRightKey = e.keyCode === 39;
 				var isDownKey = e.keyCode === 40;
 
+				if (!isDownKey && !isLeftKey && !isRightKey && !isUpKey) {
+					return;
+				}
+
 				e.preventDefault();
 
 				for (var i = 0; i < components.length; i++) {
