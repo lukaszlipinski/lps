@@ -10,7 +10,7 @@ define('models/base_component', [
 
 		},
 
-		getResizableType: function() {
+		getResizeType: function() {
 			return this.get('resizable');
 		},
 

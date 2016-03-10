@@ -7,10 +7,7 @@ define('components/button/models/main', [
 
 	return BaseComponentModel.extend({
 		defaults: {
-			disabled: false,
-			pressed: false,
-			locked: false,
-			selected: false
+			//@see controller.supportedProperties
 		},
 		initialize: function(options) {
 			BaseComponentModel.prototype.initialize.apply(this, arguments);

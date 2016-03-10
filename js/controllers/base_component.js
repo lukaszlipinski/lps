@@ -1,9 +1,11 @@
 define('controllers/base_component', [
 	'controllers/base',
-	'jquery'
+	'jquery',
+	'enums/resize'
 ], function(
 	BaseController,
-	$
+	$,
+	enumsResize
 ) {
 	'use strict';
 
@@ -25,33 +27,65 @@ define('controllers/base_component', [
 		},
 
 		setDefaults: function() {
-			var configModel = this.getModel('config');
-
-			this.setZIndex()
+			this.setZIndex();
 		},
 
+		/**
+		 * Returns parent controller
+		 *
+		 * @returns {Component|null}
+		 */
 		getParentComponent: function() {
 			return this.parentComponent;
 		},
 
+		/**
+		 * Sets new parent component
+		 *
+		 * @param {Component} component
+		 */
 		setParentComponent: function(component) {
 			this.parentComponent = component;
 		},
 
+		/**
+		 * Returns component id
+		 *
+		 * @returns {String}
+		 */
 		getId: function() {
 			return this.getModel('config').getId();
 		},
 
+		/**
+		 * Returns component type
+		 *
+		 * @see enums/components.js
+		 *
+		 * @returns {*}
+		 */
 		getType: function() {
 			return this.getModel('config').getType();
 		},
 
-		getResizableType: function() {
-			return this.getModel('config').getResizableType();
+		/**
+		 * Returns type of resize
+		 *
+		 * @see enums/resize.js
+		 *
+		 * @returns {*}
+		 */
+		getResizeType: function() {
+			return this.getModel('config').getResizeType();
 		},
 
+		/**
+		 * Returns information whether component is resizable
+		 *
+		 * @returns {Boolean}
+		 */
 		isResizable: function() {
-			return this.getResizableType() !== 'none';
+			return this.getResizeType() !== enumsResize.NONE;
 		},
 
 		isSelected: function() {

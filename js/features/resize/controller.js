@@ -1,9 +1,11 @@
 define('features/resize/controller', [
 	'controllers/base',
-	'jquery'
+	'jquery',
+	'enums/resize'
 ], function(
 	BaseController,
-	$
+	$,
+	resizeEnums
 ) {
 	return BaseController.extend({
 		initialize: function() {
@@ -17,14 +19,16 @@ define('features/resize/controller', [
 		},
 
 		getSides: function() {
-			return {
-				'fully': ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'],
-				'horizontally': ['w', 'e'],
-				'vertically': ['n', 's'],
-				'diagonally': ['nw', 'sw', 'se', 'ne'],
-				'centered-horizontally': ['w', 'e'],
-				'centered-vertically': ['n', 's']
-			};
+			var sides = {};
+
+			sides[resizeEnums.HORIZONTAL] = ['w', 'e'];
+			sides[resizeEnums.VERTICAL] = ['n', 's'];
+			sides[resizeEnums.FULL] = ['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne'];
+			sides[resizeEnums.DIAGONAL] = ['nw', 'sw', 'se', 'ne'];
+			sides[resizeEnums.CENTERED_HORIZONTAL] = ['w', 'e'];
+			sides[resizeEnums.CENTERED_VERTICAL] = ['n', 's'];
+
+			return sides;
 		},
 
 		getPosition: function(side, elRect, squareRect) {
@@ -76,7 +80,7 @@ define('features/resize/controller', [
 			var shiftKey = options.shiftKey;
 			var selectedComponent = options.selectedComponent;
 			var elStartRect = options.elRect;
-			var resizableType = selectedComponent.getResizableType();
+			var resizeType = selectedComponent.getResizeType();
 			var elParentRect = options.elParentRect;
 			var diffX = options.diffX;
 			var diffY = options.diffY;
@@ -84,7 +88,7 @@ define('features/resize/controller', [
 
 			var styles = {
 				n: {
-					top: elStartRect.top + diffY - elParentRect.top - 2,
+					top: elStartRect.top + diffY - elParentRect.top,
 					height: elStartRect.height - diffY
 				},
 				w: {
@@ -94,7 +98,7 @@ define('features/resize/controller', [
 					height: elStartRect.height + diffY
 				},
 				e: {
-					left: elStartRect.left + diffX - elParentRect.left - 2,
+					left: elStartRect.left + diffX - elParentRect.left,
 					width: elStartRect.width - diffX
 				}
 			};
@@ -114,40 +118,40 @@ define('features/resize/controller', [
 				styles.nw = {
 					width: elStartRect.width + diffX,
 					height: elStartRect.height + diffX * ratio,
-					top: elStartRect.top - diffX * ratio - elParentRect.top - 2
+					top: elStartRect.top - diffX * ratio - elParentRect.top
 				};
 
 				styles.se = {
 					width: elStartRect.width - diffX,
 					height: elStartRect.height - diffX * ratio,
-					left: elStartRect.left + diffX - elParentRect.left - 2
+					left: elStartRect.left + diffX - elParentRect.left
 				};
 
 				styles.ne = {
-					top: elStartRect.top + diffX * ratio - elParentRect.top - 2,
+					top: elStartRect.top + diffX * ratio - elParentRect.top,
 					height: elStartRect.height - diffX * ratio,
-					left: elStartRect.left + diffX - elParentRect.left - 2,
+					left: elStartRect.left + diffX - elParentRect.left,
 					width: elStartRect.width - diffX
 				};
 			}
 
-			if (resizableType === 'centered-vertically') {
+			if (resizeType === resizeEnums.CENTERED_VERTICAL) {
 				styles.n = {
 					height: elStartRect.height - diffY * 2,
-					top: elStartRect.top + diffY - elParentRect.top - 2
+					top: elStartRect.top + diffY - elParentRect.top
 				};
 				styles.s = {
 					height: elStartRect.height + diffY * 2,
-					top: elStartRect.top - diffY - elParentRect.top - 2
+					top: elStartRect.top - diffY - elParentRect.top
 				};
-			} else if (resizableType === 'centered-horizontally') {
+			} else if (resizeType === resizeEnums.CENTERED_HORIZONTAL) {
 				styles.w = {
 					width: elStartRect.width + diffX * 2,
-					left: elStartRect.left - diffX - elParentRect.left - 2
+					left: elStartRect.left - diffX - elParentRect.left
 				};
 				styles.e = {
 					width: elStartRect.width - diffX * 2,
-					left: elStartRect.left + diffX - elParentRect.left - 2
+					left: elStartRect.left + diffX - elParentRect.left
 				};
 			}
 
@@ -177,14 +181,14 @@ define('features/resize/controller', [
 					//Element will not move when max/min width is reached
 					if (style.left) {
 						if (style.width && style.width === minW || style.width === maxW) {
-							style.left = elStartRect.left + (elStartRect.width - style.width) - elParentRect.left - 2;
+							style.left = elStartRect.left + (elStartRect.width - style.width) - elParentRect.left;
 						}
 					}
 
 					//Element will not move when max/min height is reached
 					if (style.top) {
 						if (style.height && style.height === minH || style.height === maxH) {
-							style.top = elStartRect.top + (elStartRect.height - style.height) - elParentRect.top - 2;
+							style.top = elStartRect.top + (elStartRect.height - style.height) - elParentRect.top;
 						}
 					}
 				}

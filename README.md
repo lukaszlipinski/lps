@@ -2,9 +2,9 @@
 Just a website-creator
 
 ## ToDo
-- refactor resize and d&d
 - resize squares should not stay
 - show drop info
-- show can not drop info
+- show can not drop info (on drag)
+- show position rulers
 - implement button component
 - implement box component

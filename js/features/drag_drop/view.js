@@ -1,17 +1,22 @@
 define('features/drag_drop/view', [
 	'views/base',
 	'jquery',
-	'enums/components'
+	'enums/components',
+	'enums/keys',
+	'common/app'
 ], function(
 	BaseView,
 	$,
-	componentsEnums
+	componentsEnums,
+	keysEnums,
+	app
 ) {
 	var eventScopeName = 'drag_drop';
 	var defaultZIndex = 1;
 	var draggingZIndex = 5;
 
 	return BaseView.extend({
+		moved: false,
 		initialize: function() {
 			BaseView.prototype.initialize.apply(this, arguments);
 
@@ -19,131 +24,159 @@ define('features/drag_drop/view', [
 		},
 
 		initializeEventListeners: function() {
-			var view = this;
 			var $document = $(document);
+
+			$document.on('keyup', this.onKeyboardEvents.bind(this));
+			$document.on('mousedown.' + eventScopeName, '[draggable="true"], [data-component="arena"]', this.onDragStart.bind(this));
+		},
+
+		handleSelectingComponents: function(e) {
 			var CM = window.CM;
+			var componentToSelect = CM.getComponent(e.currentTarget);
+			var allComponents = CM.getComponents();
+			var isCtrlPressed = e.ctrlKey || e.metaKey;
 
-			$document.on('keyup', function(e) {
-				var components = CM.getSelectedComponents();
-				var ctrlKey = e.ctrlKey || e.metaKey;
-				var shiftKey = e.shiftKey;
-				var isLeftKey = e.keyCode === 37;
-				var isUpKey = e.keyCode === 38;
-				var isRightKey = e.keyCode === 39;
-				var isDownKey = e.keyCode === 40;
+			//Handle selecting items
+			if ((!isCtrlPressed && !componentToSelect.isSelected()) || componentToSelect.getType() === componentsEnums.ARENA) {
+				this.unSelectComponents(allComponents);
+			}
 
-				if (!isDownKey && !isLeftKey && !isRightKey && !isUpKey) {
-					return;
+			if (componentToSelect.getType() !== componentsEnums.ARENA) {
+				this.unSelectComponentsTree(componentToSelect);
+
+				if (isCtrlPressed) {
+					componentToSelect.toggleSelection();
+				} else {
+					componentToSelect.select();
 				}
+			}
+		},
 
-				e.preventDefault();
+		onDragStart: function(e) {
+			var CM = window.CM;
+			var $document = $(document);
 
-				for (var i = 0; i < components.length; i++) {
-					var component = components[i];
-					var x = 0, y = 0;
+			this.moved = false;
 
-					if (isRightKey || isLeftKey) {
-						x = (isRightKey ? 1 : -1) * (ctrlKey ? 5 : (shiftKey ? 10 : 1));
-					}
+			//Handle selecting items
+			this.handleSelectingComponents(e);
 
-					if (isUpKey || isDownKey) {
-						y = (isDownKey ? 1 : -1) * (ctrlKey ? 5 : (shiftKey ? 10 : 1));
-					}
+			//Handle moving elements
+			var components = CM.getSelectedComponents();
 
-					component.moveBy(x, y);
-				}
+			if (!components.length) {
+				return;
+			}
+
+			e.stopPropagation();
+
+			var startX = e.pageX,
+				startY = e.pageY;
+
+			var startPositions = this.controller.getRects(components);
+
+			app.publish('component:drag:start', {
+				components: components
 			});
 
-			$document.on('mousedown.' + eventScopeName, '[draggable="true"], [data-component="arena"]', function(e) {
-				var isCtrlPressed = e.ctrlKey || e.metaKey;
+			$document.on('mousemove.' + eventScopeName, this.onDrag.bind(this, startX, startY, startPositions));
+			$document.on('mouseup.' + eventScopeName, this.onDrop.bind(this));
+		},
 
-				var componentToSelect = CM.getComponent(e.currentTarget);
-				var allComponents = CM.getComponents();
+		onDrag: function(startX, startY, startPositions, e) {
+			var selectedComponents = CM.getSelectedComponents();
+			var currentX = e.pageX,
+				currentY = e.pageY;
 
-				//Handle selecting items
-				if ((!isCtrlPressed && !componentToSelect.isSelected()) || componentToSelect.getType() === componentsEnums.ARENA) {
-					view.unSelectComponents(allComponents);
+			e.preventDefault();
+
+			this.controller.setZIndexes(selectedComponents, draggingZIndex);
+
+			//Moving elements
+			for (var i = 0; i < selectedComponents.length; i++) {
+				var selectedComponent = selectedComponents[i];
+				var componentRect = startPositions[selectedComponent.getId()].child,
+					parentComponentRect = startPositions[selectedComponent.getId()].parent;
+
+				var currentTop = componentRect.top + (currentY - startY) - parentComponentRect.top,
+					currentLeft = componentRect.left + (currentX - startX) - parentComponentRect.left;
+
+				if (selectedComponent.isLocked()) {
+					currentTop = Math.max(0, Math.min(parentComponentRect.height - componentRect.height, currentTop));
+					currentLeft = Math.max(0, Math.min(parentComponentRect.width - componentRect.width, currentLeft));
 				}
 
-				if (componentToSelect.getType() !== componentsEnums.ARENA) {
-					view.unSelectComponentsTree(componentToSelect);
+				selectedComponent.setPosition(currentLeft, currentTop);
+			}
 
-					if (isCtrlPressed) {
-						componentToSelect.toggleSelection();
-					} else {
-						componentToSelect.select();
-					}
-				}
+			var hoveredElement = this.controller.getElementFromPoint(currentX, currentY);
 
-				//Handle moving elements
-				var components = CM.getSelectedComponents();
-				var moved = false;
+			if (hoveredElement && hoveredElement.isDroppable()) {
+				hoveredElement.showDropIndicator();
+			}
 
-				if (!components.length) {
-					return;
-				}
-
-				e.stopPropagation();
-
-				var startX = e.pageX,
-					startY = e.pageY;
-
-				var startPositions = view.controller.getRects(components);
-
-				$document.on('mousemove.' + eventScopeName, function(e) {
-					var selectedComponents = CM.getSelectedComponents();
-					var currentX = e.pageX,
-						currentY = e.pageY;
-
-					moved = true;
-
-					e.preventDefault();
-
-					view.controller.setZIndexes(selectedComponents, draggingZIndex);
-
-					//Moving elements
-					for (var i = 0; i < selectedComponents.length; i++) {
-						var selectedComponent = selectedComponents[i];
-						var componentRect = startPositions[selectedComponent.getId()].child,
-							parentComponentRect = startPositions[selectedComponent.getId()].parent;
-
-						var currentTop = componentRect.top + (currentY - startY) - parentComponentRect.top,
-							currentLeft = componentRect.left + (currentX - startX) - parentComponentRect.left;
-
-						if (selectedComponent.isLocked()) {
-							currentTop = Math.max(0, Math.min(parentComponentRect.height - componentRect.height, currentTop));
-							currentLeft = Math.max(0, Math.min(parentComponentRect.width - componentRect.width, currentLeft));
-						}
-
-						selectedComponent.setPosition(currentLeft, currentTop);
-					}
-
-					var hoveredElement = view.controller.getElementFromPoint(currentX, currentY);
-
-					if (hoveredElement && hoveredElement.isDroppable()) {
-						hoveredElement.showDropIndicator();
-					}
-				});
-
-				$document.on('mouseup.' + eventScopeName, function(e) {
-					var currentX = e.pageX,
-						currentY = e.pageY;
-
-					$document.off('mousemove.' + eventScopeName);
-					$document.off('mouseup.' + eventScopeName);
-
-					//Dropping elements
-					if (moved) {
-						var hoveredElement = view.controller.getElementFromPoint(currentX, currentY);
-
-						if (hoveredElement && hoveredElement.isDroppable()) {
-							hoveredElement.appendComponents(currentX, currentY, CM.getSelectedComponents());
-						}
-					}
-
-					view.controller.setZIndexes(components, defaultZIndex);
-				});
+			app.publish('component:drag', {
+				components: selectedComponents,
+				isFirstTick: !this.moved //'component:drag' event is fired when every single 'mousemove' event is being fired. This flag determines the first one.
 			});
+
+			this.moved = true;
+		},
+
+		onDrop: function(e) {
+			var currentX = e.pageX,
+				currentY = e.pageY;
+			var $document = $(document);
+			var selectedComponents = CM.getSelectedComponents();
+
+			$document.off('mousemove.' + eventScopeName);
+			$document.off('mouseup.' + eventScopeName);
+
+			//Dropping elements
+			if (this.moved) {
+				var hoveredElement = this.controller.getElementFromPoint(currentX, currentY);
+
+				if (hoveredElement && hoveredElement.isDroppable()) {
+					hoveredElement.appendComponents(currentX, currentY, selectedComponents);
+				}
+			}
+
+			this.controller.setZIndexes(selectedComponents, defaultZIndex);
+
+			app.publish('component:drop', {
+				components: selectedComponents
+			});
+		},
+
+		onKeyboardEvents: function(e) {
+			var components = CM.getSelectedComponents();
+			var ctrlKey = e.ctrlKey || e.metaKey;
+			var shiftKey = e.shiftKey;
+			var isLeftKey = e.keyCode === keysEnums.ARROW_LEFT;
+			var isUpKey = e.keyCode === keysEnums.ARROW_UP;
+			var isRightKey = e.keyCode === keysEnums.ARROW_RIGHT;
+			var isDownKey = e.keyCode === keysEnums.ARROW_DOWN;
+
+			if (!isDownKey && !isLeftKey && !isRightKey && !isUpKey) {
+				return;
+			}
+
+			e.preventDefault();
+
+			for (var i = 0; i < components.length; i++) {
+				var component = components[i];
+				var x = 0, y = 0;
+
+				if (isRightKey || isLeftKey) {
+					x = (isRightKey ? 1 : -1) * (ctrlKey ? 5 : (shiftKey ? 10 : 1));
+				}
+
+				if (isUpKey || isDownKey) {
+					y = (isDownKey ? 1 : -1) * (ctrlKey ? 5 : (shiftKey ? 10 : 1));
+				}
+
+				component.moveBy(x, y);
+			}
 		},
 
 		unSelectComponents: function(components) {
@@ -163,13 +196,6 @@ define('features/drag_drop/view', [
 					components[i].unSelect();
 				}
 			}
-		},
-
-		moveElement: function($el, posX, posY) {
-			$el.css({
-				top: posY,
-				left: posX
-			});
 		},
 
 		destroy: function() {

@@ -10,12 +10,11 @@ define('components/arena/controllers/main', [
 			BaseComponentController.prototype.initialize.apply(this, arguments);
 		},
 
+		/**
+		 * @see BaseComponentController
+		 */
 		getParentComponent: function() {
 			return null;
-		},
-
-		registerElement: function() {
-
 		},
 
 		destroy : function() {

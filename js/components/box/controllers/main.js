@@ -36,7 +36,7 @@ define('components/box/controllers/main', [
 		},
 		'data-resizable': {
 			type: 'string',
-			defaultValue: 'fully'
+			defaultValue: 'full'
 		},
 		'data-minwidth': {
 			type: 'number',

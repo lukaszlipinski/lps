@@ -36,7 +36,7 @@ define('components/button/controllers/main', [
 		},
 		'data-resizable': {
 			type: 'string',
-			defaultValue: 'fully'
+			defaultValue: 'full'
 		},
 		'data-minwidth': {
 			type: 'number',

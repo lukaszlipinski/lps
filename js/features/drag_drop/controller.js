@@ -14,19 +14,6 @@ define('features/drag_drop/controller', [
 
 		},
 
-		getRootElement: function() {
-			var components = CM.getComponents();
-
-			for(var i = 0; i < components.length; i++) {
-				if (components[i].getParentComponent() === null) {
-					return components[i];
-				}
-			}
-
-			throw 'No root element. This should not happend';
-			return null;
-		},
-
 		getRects: function(components) {
 			var rects = {};
 
@@ -40,23 +27,6 @@ define('features/drag_drop/controller', [
 			}
 
 			return rects;
-		},
-
-		getRootElement: function() {
-			var components = CM.getComponents();
-
-			for(var i = 0; i < components.length; i++) {
-				if (components[i].getParentComponent() === null) {
-					return components[i];
-				}
-			}
-
-			throw 'No root element. This should not happend';
-			return null;
-		},
-
-		isOverDroppableItem: function(map, x, y) {
-			return false;
 		},
 
 		setZIndexes: function(components, value) {
