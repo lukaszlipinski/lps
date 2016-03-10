@@ -65,6 +65,10 @@ define('features/resize/view', [
 					this.hideAllSquares();
 				}
 			}.bind(this));
+
+			app.subscribe('component:multi_select', function(e, data) {
+				this.hideAllSquares();
+			}.bind(this));
 		},
 
 		renderSquares: function(component) {
@@ -126,9 +130,10 @@ define('features/resize/view', [
 		},
 
 		onSelectComponent: function(e) {
+			var ctrlKey = e.ctrlKey || e.metaKey;
 			var component = CM.getComponent(e.currentTarget);
 
-			if (component.getType() === enumsComponents.ARENA) {
+			if (ctrlKey || component.getType() === enumsComponents.ARENA || this.controller.areMultipleComponentsSelected()) {
 				this.hideAllSquares();
 				return;
 			}

@@ -8,6 +8,8 @@ body {
 	-moz-user-select: -moz-none;
 	-o-user-select: none;
 	user-select: none;
+
+	box-sizing: border-box;
 }
 
 .arena {
@@ -17,11 +19,18 @@ body {
 	position: relative;
 }
 
-.arena [aria-selected="true"] .outer-editable {
-	border:1px solid black;
-	margin:-1px 0 0 -1px;
+.arena [aria-selected="true"] > .outer-editable {
+	border:1px solid red;
 }
 
-.arena [aria-selected="true"].resizing-mode .outer-editable {
+.arena [aria-selected="true"].resizing-mode > .outer-editable {
 	border-color: #00ffff;
+}
+
+.info-box {
+	position: absolute;
+	top:0;
+	right:0;
+	width:200px;
+	background-color: yellow;
 }

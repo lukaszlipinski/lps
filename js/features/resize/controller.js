@@ -18,6 +18,10 @@ define('features/resize/controller', [
 
 		},
 
+		areMultipleComponentsSelected: function() {
+			return CM.getSelectedComponents().length > 1;
+		},
+
 		getSides: function() {
 			var sides = {};
 

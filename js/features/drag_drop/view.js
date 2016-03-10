@@ -29,6 +29,18 @@ define('features/drag_drop/view', [
 
 			$document.on('keyup', this.onKeyboardEvents.bind(this));
 			$document.on('mousedown.' + eventScopeName, '[draggable="true"], [data-component="arena"]', this.onDragStart.bind(this));
+			//$document.on('click.' + eventScopeName, '[draggable="true"], [data-component="arena"]', this.handleSelectingComponentsOnClick.bind(this));
+		},
+
+		handleSelectingComponentsOnClick: function(e) {
+			var CM = window.CM;
+			var componentToSelect = CM.getComponent(e.currentTarget);
+			var isCtrlPressed = e.ctrlKey || e.metaKey;
+			var allComponents = CM.getComponents();
+
+			if (!isCtrlPressed && allComponents.length > 1) {
+				this.unSelectComponents(allComponents);
+			}
 		},
 
 		handleSelectingComponents: function(e) {
@@ -47,6 +59,10 @@ define('features/drag_drop/view', [
 
 				if (isCtrlPressed) {
 					componentToSelect.toggleSelection();
+
+					app.publish('component:multi_select', {
+						components: componentToSelect
+					});
 				} else {
 					componentToSelect.select();
 				}
