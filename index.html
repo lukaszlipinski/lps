@@ -11,22 +11,29 @@
     </head>
     <body>
         <div data-component="arena" class="arena" aria-dropeffect="move">
-            <div data-component="button" class="component-button" data-resizable="full" aria-disabled="false" aria-pressed="false" style="top:210px;left:123px;width:250px;height:75px;" draggable="true">
-                <div class="outer-editable">
-                    <div class="editable">
-                        <a href=""></a>
-                        <button type="button" contenteditable="false">
-                            <div>Button</div>
-                        </button>
+            <div class="outer-editable">
+                <div class="editable">
+                    <div data-component="button" class="component-button" data-locked="true" data-resizable="full" aria-disabled="false" aria-pressed="false" style="top:210px;left:123px;width:250px;height:75px;" draggable="true">
+                        <div class="outer-editable">
+                            <div class="editable">
+                                <a href=""></a>
+                                <button type="button" contenteditable="false">
+                                    <div>Button</div>
+                                </button>
+                            </div>
+                            <div class="backdrop"></div>
+                        </div>
                     </div>
-                    <div class="backdrop"></div>
-                </div>
-            </div>
 
-            <div data-component="box" data-resizable="full" aria-dropeffect="move" class="box" style="top:20px;left:400px;width:300px;height:300px;" draggable="true">
-                <div class="outer-editable">
-                    <div class="editable"></div>
-                    <div class="backdrop"></div>
+
+                    <div data-component="box" data-resizable="full" aria-dropeffect="move" class="box" style="top:20px;left:400px;width:300px;height:300px;" draggable="true">
+                        <div class="outer-editable">
+                            <div class="editable">
+
+                            </div>
+                            <div class="backdrop"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

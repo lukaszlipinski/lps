@@ -21,11 +21,13 @@ requirejs.config({
 require([
 	'jquery',
 	'managers/components',
-	'polyfills/array_includes'
+	'polyfills/array_includes',
+	'libs/plugins/closest_descendent'
 ], function(
 	$,
 	componentsManager,
-	voidPolyfillArrayIncludes
+	voidPolyfillArrayIncludes,
+	voidJQueryClosestDescendent
 ) {
 	'use strict';
 
