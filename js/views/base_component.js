@@ -7,11 +7,22 @@ define('views/base_component', [
 
 	return BaseView.extend({
 		originalInnerHTML: null,
+		$outer: null,
+		$editable: null,
+		$backdrop: null,
 
 		initialize : function(options) {
 			BaseView.prototype.initialize.apply(this, arguments);
 
 			this.originalInnerHTML = this.$el.html();
+			this.$outer = this.$el.find('.outer-editable');
+			this.$editable = this.$el.find('.editable');
+			this.$backdrop = this.$el.find('.backdrop');
+
+			if (this.$backdrop.length === 0) {
+				this.$outer.append('<div class="backdrop"></div>');
+				this.$backdrop = this.$el.find('.backdrop');
+			}
 
 			this.initializeContent();
 		},
@@ -56,6 +67,7 @@ define('views/base_component', [
 		},
 
 		appendElement: function($el) {
+			console.log($el, this.$editable);
 			$el.appendTo(this.$el);
 		},
 

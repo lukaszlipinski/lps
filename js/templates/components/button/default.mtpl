@@ -2,7 +2,7 @@
     <div class="editable">
         <a href=""></a>
         <button type="button" contenteditable="false">
-            <div>Button</div>
+            <div data-label="true">Button</div>
         </button>
     </div>
     <div class="backdrop"></div>

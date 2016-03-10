@@ -8,9 +8,12 @@ define('components/button/views/main', [
 	'use strict';
 
 	return BaseComponentView.extend({
+		$label: null,
+
 		initialize : function() {
 			BaseComponentView.prototype.initialize.apply(this, arguments);
 
+			this.$label = this.$el.find('[data-label="true"]');
 			this.initializeEventListeners();
 		},
 
@@ -19,7 +22,7 @@ define('components/button/views/main', [
 		},
 
 		initializeContent: function() {
-			
+
 		},
 
 		destroy : function() {
