@@ -29,7 +29,17 @@
                     <div data-component="box" data-resizable="full" aria-dropeffect="move" class="box" style="top:20px;left:400px;width:300px;height:300px;" draggable="true">
                         <div class="outer-editable">
                             <div class="editable">
-
+                                <div data-component="button" class="component-button" data-locked="true" data-resizable="none" aria-disabled="false" aria-pressed="false" style="top:20px;left:20px;width:250px;height:75px;" draggable="true">
+                                    <div class="outer-editable">
+                                        <div class="editable">
+                                            <a href=""></a>
+                                            <button type="button" contenteditable="false">
+                                                <div>Locked Button</div>
+                                            </button>
+                                        </div>
+                                        <div class="backdrop"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="backdrop"></div>
                         </div>
@@ -90,6 +100,14 @@
                             <div class="backdrop"></div>
                         </div>
                     </div>
+                    <div data-component="box" data-resizable="full" data-maxwidth="200" data-maxheight="200" aria-dropeffect="move" class="box" style="top:80px;left:140px;width:50px;height:50px;" draggable="true">
+                        <div class="outer-editable">
+                            <div class="editable">
+                                MAX: H/W
+                            </div>
+                            <div class="backdrop"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="backdrop"></div>
             </div>
@@ -100,6 +118,9 @@
                 <li>Drag drop wielu elementow na raz</li>
                 <li>Wskazywanie miejsc dla DROP-a</li>
                 <li>Wskaźnik wielkości elemetu resizowanego</li>
+                <li>Max/Min width/height elementow</li>
+                <li>Skalowanie elementow przy wsisnietym SHIFT</li>
+                <li>Blokowanie elemenów wewnątrz innych</li>
             </ul>
         </div>
         <script type="application/javascript" src="js/bootstrap.js"></script>
