@@ -19,7 +19,7 @@
 	border: 1px solid rgb(0, 0, 0);
 }
 
-.box > .editable {
+.box .outer-editable > .editable {
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -29,4 +29,17 @@
 	vertical-align: top;
 	font-size: 100%;
 	background: transparent;
+}
+
+.box .outer-editable > .backdrop {
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background-color: black;
+	opacity: 0.5;
+	display:none;
+	text-align: center;
+	color:white;
 }

@@ -52,6 +52,20 @@ define('features/drag_drop/controller', [
 			return CM.getComponent(el);
 		},
 
+		isParentOfOneOfSelectedItems: function(component) {
+			var selectedComponents = CM.getSelectedComponents();
+
+			for(var i = 0; i < selectedComponents.length; i++) {
+				var selectedComponent = selectedComponents[i];
+
+				if (selectedComponent.getParentComponent() === component) {
+					return true;
+				}
+			}
+
+			return false;
+		},
+
 		destroy: function() {
 			BaseController.prototype.destroy.apply(this, arguments);
 		}

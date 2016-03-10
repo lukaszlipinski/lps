@@ -17,6 +17,7 @@ define('features/drag_drop/view', [
 
 	return BaseView.extend({
 		moved: false,
+		hoveredElement: null,
 		initialize: function() {
 			BaseView.prototype.initialize.apply(this, arguments);
 
@@ -109,9 +110,18 @@ define('features/drag_drop/view', [
 				selectedComponent.setPosition(currentLeft, currentTop);
 			}
 
-			var hoveredElement = this.controller.getElementFromPoint(currentX, currentY);
+			var currentlyHoveredElement = this.controller.getElementFromPoint(currentX, currentY);
+			var hoveredElement = this.hoveredElement;
 
-			if (hoveredElement && hoveredElement.isDroppable()) {
+			if (hoveredElement !== currentlyHoveredElement) {
+				if (hoveredElement) {
+					hoveredElement.hideDropIndicator();
+				}
+
+				hoveredElement = this.hoveredElement = currentlyHoveredElement;
+			}
+
+			if (hoveredElement && hoveredElement.isDroppable() && !this.controller.isParentOfOneOfSelectedItems(hoveredElement)) {
 				hoveredElement.showDropIndicator();
 			}
 
@@ -138,6 +148,7 @@ define('features/drag_drop/view', [
 
 				if (hoveredElement && hoveredElement.isDroppable()) {
 					hoveredElement.appendComponents(currentX, currentY, selectedComponents);
+					hoveredElement.hideDropIndicator();
 				}
 			}
 

@@ -150,7 +150,11 @@ define('controllers/base_component', [
 		},
 
 		showDropIndicator: function() {
+			this.view.showDropIndicator();
+		},
 
+		hideDropIndicator: function() {
+			this.view.hideDropIndicator();
 		},
 
 		appendComponents: function(x, y, components) {

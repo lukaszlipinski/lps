@@ -66,6 +66,14 @@ define('views/base_component', [
 			this.$el.hide();
 		},
 
+		showDropIndicator: function() {
+			this.$backdrop.html('Drop here').show();
+		},
+
+		hideDropIndicator: function() {
+			this.$backdrop.hide();
+		},
+
 		appendElement: function($el) {
 			$el.appendTo(this.$editable);
 		},
