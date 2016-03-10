@@ -31,6 +31,7 @@ define('features/resize/controller', [
 			sides[resizeEnums.DIAGONAL] = ['nw', 'sw', 'se', 'ne'];
 			sides[resizeEnums.CENTERED_HORIZONTAL] = ['w', 'e'];
 			sides[resizeEnums.CENTERED_VERTICAL] = ['n', 's'];
+			sides[resizeEnums.NONE] = [];
 
 			return sides;
 		},
