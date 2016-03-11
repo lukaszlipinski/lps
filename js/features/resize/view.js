@@ -69,6 +69,10 @@ define('features/resize/view', [
 			app.subscribe('component:multi_select', function(e, data) {
 				this.hideAllSquares();
 			}.bind(this));
+
+			app.subscribe('component:arrows:move', function(e, data) {
+				this.hideAllSquares();
+			}.bind(this));
 		},
 
 		renderSquares: function(component) {
@@ -144,9 +148,7 @@ define('features/resize/view', [
 		onResizeStart: function(e) {
 			var $document = $(document);
 
-			app.publish('component:resize:start', {
-				component: this.selectedComponent
-			});
+			app.publish('component:resize:start', {});
 
 			$document.on('mousemove.' + eventScopeName, this.onResize.bind(this,
 				e.pageX,
@@ -163,9 +165,7 @@ define('features/resize/view', [
 			var currentX = e.pageX,
 				currentY = e.pageY;
 
-			app.publish('component:resize:start', {
-				component: this.selectedComponent
-			});
+			app.publish('component:resize:start', {});
 
 			e.preventDefault();
 
@@ -189,9 +189,7 @@ define('features/resize/view', [
 			$document.off('mousemove.' + eventScopeName);
 			$document.off('mouseup.' + eventScopeName);
 
-			app.publish('component:resize:stop', {
-				component: this.selectedComponent
-			});
+			app.publish('component:resize:stop', {});
 
 			this.$currentSizeIndicator.hide();
 		},

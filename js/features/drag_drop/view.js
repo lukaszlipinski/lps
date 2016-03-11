@@ -29,17 +29,32 @@ define('features/drag_drop/view', [
 
 			$document.on('keyup', this.onKeyboardEvents.bind(this));
 			$document.on('mousedown.' + eventScopeName, '[draggable="true"], [data-component="arena"]', this.onDragStart.bind(this));
-			//$document.on('click.' + eventScopeName, '[draggable="true"], [data-component="arena"]', this.handleSelectingComponentsOnClick.bind(this));
+			$document.on('click.' + eventScopeName, '[draggable="true"], [data-component="arena"]', this.handleSelectingComponentsOnClick.bind(this));
 		},
 
 		handleSelectingComponentsOnClick: function(e) {
 			var CM = window.CM;
 			var componentToSelect = CM.getComponent(e.currentTarget);
-			var isCtrlPressed = e.ctrlKey || e.metaKey;
 			var allComponents = CM.getComponents();
+			var isCtrlPressed = e.ctrlKey || e.metaKey;
 
-			if (!isCtrlPressed && allComponents.length > 1) {
+			e.stopPropagation();
+
+			//Handle selecting items
+			if (!isCtrlPressed || componentToSelect.getType() === componentsEnums.ARENA) {
 				this.unSelectComponents(allComponents);
+			}
+
+			if (componentToSelect.getType() !== componentsEnums.ARENA) {
+				this.unSelectComponentsTree(componentToSelect);
+
+				if (isCtrlPressed) {
+					componentToSelect.toggleSelection();
+
+					app.publish('component:multi_select', {});
+				} else {
+					componentToSelect.select();
+				}
 			}
 		},
 
@@ -48,6 +63,8 @@ define('features/drag_drop/view', [
 			var componentToSelect = CM.getComponent(e.currentTarget);
 			var allComponents = CM.getComponents();
 			var isCtrlPressed = e.ctrlKey || e.metaKey;
+
+			e.stopPropagation();
 
 			//Handle selecting items
 			if ((!isCtrlPressed && !componentToSelect.isSelected()) || componentToSelect.getType() === componentsEnums.ARENA) {
@@ -60,9 +77,7 @@ define('features/drag_drop/view', [
 				if (isCtrlPressed) {
 					componentToSelect.toggleSelection();
 
-					app.publish('component:multi_select', {
-						components: componentToSelect
-					});
+					app.publish('component:multi_select', {});
 				} else {
 					componentToSelect.select();
 				}
@@ -76,7 +91,7 @@ define('features/drag_drop/view', [
 			this.moved = false;
 
 			//Handle selecting items
-			this.handleSelectingComponents(e);
+			//this.handleSelectingComponents(e);
 
 			//Handle moving elements
 			var components = CM.getSelectedComponents();
@@ -92,9 +107,7 @@ define('features/drag_drop/view', [
 
 			var startPositions = this.controller.getRects(components);
 
-			app.publish('component:drag:start', {
-				components: components
-			});
+			app.publish('component:drag:start', {});
 
 			$document.on('mousemove.' + eventScopeName, this.onDrag.bind(this, startX, startY, startPositions));
 			$document.on('mouseup.' + eventScopeName, this.onDrop.bind(this));
@@ -170,9 +183,7 @@ define('features/drag_drop/view', [
 
 			this.controller.setZIndexes(selectedComponents, defaultZIndex);
 
-			app.publish('component:drop', {
-				components: selectedComponents
-			});
+			app.publish('component:drop', {});
 		},
 
 		onKeyboardEvents: function(e) {
@@ -204,6 +215,8 @@ define('features/drag_drop/view', [
 
 				component.moveBy(x, y);
 			}
+
+			app.publish('component:arrows:move', {});
 		},
 
 		unSelectComponents: function(components) {

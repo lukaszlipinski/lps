@@ -32,7 +32,21 @@ define('views/base_component', [
 		},
 
 		getRect: function() {
-			return this.el.getBoundingClientRect();
+			var borderTopWidth = parseInt(this.$el.css("borderTopWidth"), 10),
+				borderLeftWidth = parseInt(this.$el.css("borderLeftWidth"), 10),
+				borderRightWidth = parseInt(this.$el.css("borderRightWidth"), 10),
+				borderBottomWidth = parseInt(this.$el.css("borderBottomWidth"), 10);
+
+			var rect = this.el.getBoundingClientRect();
+
+			return {
+				top: rect.top + borderTopWidth,
+				left: rect.left + borderLeftWidth,
+				bottom: rect.bottom,
+				right: rect.right,
+				width: rect.width,
+				height: rect.height
+			};
 		},
 
 		getElement: function() {
